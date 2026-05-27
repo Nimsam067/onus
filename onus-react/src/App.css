@@ -24,21 +24,27 @@ body {
 
 .main-content {
   flex: 1;
-  padding: 30px;
+  /*padding: 30px;*/
+
+  margin-left: 14vw;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
 }
 
+/*mr + ml + cg + 2*c = 100*/
 
 /* =========================
-   DASHBOARD LAYOUT
+   DASHBOARD GRID
 ========================= */
 
 .dashboard-grid {
   display: grid;
 
-  /* Responsive layout */
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 320px));
 
-  gap: 24px;
+  row-gap: 7vh;
+  column-gap: 10vw;
+  justify-content: start;
 }
 
 
@@ -47,6 +53,9 @@ body {
 ========================= */
 
 .card {
+  width: 33vw;
+  height: 40vh;
+
   background-color: white;
 
   border: 2px solid #dcdcdc;
@@ -55,6 +64,8 @@ body {
   padding: 20px;
 
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+
+  overflow-y: auto;
 
   transition: transform 0.2s ease;
 }
@@ -69,7 +80,9 @@ body {
 ========================= */
 
 .sidebar {
-  width: 100px;
+  position: fixed;
+
+  width: 10vw;
   height: 100vh;
 
   background-color: white;

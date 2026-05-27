@@ -20,11 +20,11 @@ function App() {
         {/* The dashboard grid that holds all major components */}
         <div className="dashboard-grid">
           <div className="card">
-            <TaskDashboard />
-          </div>
-
-          <div className="card">
             <ContentDashboard />
+          </div>
+          
+          <div className="card">
+            <TaskDashboard />
           </div>
 
            <div className="card">

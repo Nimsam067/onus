@@ -1,6 +1,8 @@
 import TaskDashboard from "./components/tasks_dashboard";
 import ContentDashboard from "./components/content_dashboard";
 import "./App.css";
+import DeadlineTracker from "./components/deadline_tracker";
+import ProjectCompletion from "./components/project_completion";
 
 
 function App() {
@@ -19,6 +21,14 @@ function App() {
 
         <div className="card">
           <ContentDashboard />
+        </div>
+
+        <div className="card">
+          <DeadlineTracker />
+        </div>
+
+        <div className="card">
+          <ProjectCompletion />
         </div>
       </div>
     </div>

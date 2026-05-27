@@ -15,7 +15,7 @@
     outline: 2px solid var(--accent);
     outline-offset: 2px;
   }
-}
+} 
 
 .hero {
   position: relative;
@@ -214,4 +214,111 @@
 
 .card:hover {
   transform: translateY(-2px);
+}
+
+.deadline-card {
+  width: 100%;
+}
+
+.deadline-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.deadline-header h2 {
+  font-size: 18px;
+  margin: 0;
+  color: #1f2937;
+}
+
+.deadline-icon {
+  font-size: 22px;
+}
+
+.deadline-list {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.deadline-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.deadline-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.small-calendar-icon {
+  background-color: #f3f0ff;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 18px;
+}
+
+.deadline-left p {
+  margin: 0;
+  color: #1f2937;
+  font-size: 15px;
+}
+
+.deadline-date {
+  margin: 0;
+  color: #374151;
+  font-size: 15px;
+}
+
+.project-completion-card {
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 24px;
+  width: 430px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.project-completion-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.project-completion-header h2 {
+  margin: 0;
+  font-size: 18px;
+  color: #1f2937;
+}
+
+.progress-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.progress-bar-background {
+  flex: 1;
+  height: 12px;
+  background-color: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: #635bff;
+  border-radius: 999px;
+}
+
+.progress-percentage {
+  margin: 0;
+  font-size: 24px;
+  color: #635bff;
+  font-weight: 500;
 }

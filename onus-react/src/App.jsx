@@ -26,14 +26,14 @@ function App() {
           <div className="card">
             <ContentDashboard />
           </div>
-        </div>
 
-        <div className="card">
-          <DeadlineTracker />
-        </div>
+           <div className="card">
+            <DeadlineTracker />
+          </div>
 
-        <div className="card">
-          <ProjectCompletion />
+          <div className="card">
+            <ProjectCompletion />
+          </div>
         </div>
       </div>
     </div>

@@ -26,7 +26,7 @@ body {
     outline: 2px solid var(--accent);
     outline-offset: 2px;
   }
-}
+} 
 
 .hero {
   position: relative;
@@ -235,58 +235,3 @@ body {
 .card:hover {
   transform: translateY(-2px);
 }
-
-/* Sidebar styling */
-.sidebar {
-  width: 100px;
-  height: 100vh;
-
-  background-color: white;
-  border-right: 2px solid #dcdcdc;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-
-  padding: 20px 15px;
-
-  box-sizing: border-box;
-}
-
-.sidebar-top {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-
-  width: 100%;
-  align-items: center;
-}
-
-.sidebar-button {
-  width: 100%;
-
-  border: none;
-  background: black;
-
-  padding: 10px;
-  border-radius: 10px;
-
-  cursor: pointer;
-
-  transition: background-color 0.2s ease;
-}
-
-.sidebar-button:hover {
-  background-color: #f0f0f0;
-}
-
-.profile-circle {
-  width: 40px;
-  height: 40px;
-
-  border-radius: 50%;
-
-  background-color: lightblue;
-}
-

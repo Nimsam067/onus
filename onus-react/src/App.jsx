@@ -6,6 +6,7 @@ import DeadlineTracker from "./components/deadline_tracker";
 import ProjectCompletion from "./components/project_completion";
 
 
+
 function App() {
   return (
     // The main container for all the app's contents

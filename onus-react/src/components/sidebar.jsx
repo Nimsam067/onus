@@ -8,7 +8,7 @@ function Sidebar() {
         <button className="sidebar-button">Settings</button>
       </div>
 
-      <div className="profile-circle"></div>
+      <button className="profile-circle"></button>
     </div>
   );
 }

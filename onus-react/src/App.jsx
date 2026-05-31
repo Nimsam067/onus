@@ -4,6 +4,7 @@ import Sidebar from "./components/sidebar";
 import "./App.css";
 import DeadlineTracker from "./components/deadline_tracker";
 import ProjectCompletion from "./components/project_completion";
+import CommitProgress from "./components/commit_progress";
 
 
 function App() {
@@ -18,22 +19,33 @@ function App() {
       <div className="main-content">
 
         {/* The dashboard grid that holds all major components */}
-        <div className="dashboard-grid">
-          <div className="card">
-            <ContentDashboard />
-          </div>
-          
-          <div className="card">
-            <TaskDashboard />
-          </div>
+        <div className="dashboard-layout">
 
-           <div className="card">
-            <DeadlineTracker />
-          </div>
+          {/* The left column of the dashboard */}
+              <div className="card contribution-card">
+                <ContentDashboard />
+              </div>
 
-          <div className="card">
-            <ProjectCompletion />
-          </div>
+              <div className="card commit-card">
+                <CommitProgress />
+              </div>
+
+
+
+          {/* The right column of the dashboard */}
+            <div className="card tasks-card">
+              <TaskDashboard />
+            </div>
+
+            <div className="card completion-card">
+             <ProjectCompletion />
+            </div>
+
+            <div className="card deadline-card-wrapper">
+              <DeadlineTracker />
+            </div>
+
+
         </div>
       </div>
     </div>

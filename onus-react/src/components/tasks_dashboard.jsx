@@ -36,7 +36,7 @@ function TasksDashboard() {
     
     return (
     <div className="tasks-dashboard">
-      <h1>Tasks Dashboard</h1>
+      <h2 className="card-title">Tasks Dashboard</h2>
       {tasks.map((task) => (
   <TaskCard key={task.id} task={task} />
 ))}

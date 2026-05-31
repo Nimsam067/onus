@@ -19,9 +19,7 @@ function DeadlineTracker() {
 
   return (
     <div className="deadline-card">
-      <div className="deadline-header">
-        <h2>Deadline Tracker</h2>
-      </div>
+        <h2 className="card-title">Deadline Tracker</h2>
       <div className="deadline-list">
         {deadlines.map((deadline) => (
           <div className="deadline-row" key={deadline.id}>

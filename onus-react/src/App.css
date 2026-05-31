@@ -24,27 +24,28 @@ body {
 
 .main-content {
   flex: 1;
-  /*padding: 30px;*/
 
-  margin-left: 14vw;
-  margin-top: 5vh;
-  margin-bottom: 5vh;
+  margin-left: 150px;
+  padding: 20px;
 }
-
-/*mr + ml + cg + 2*c = 100*/
 
 /* =========================
    DASHBOARD GRID
 ========================= */
 
-.dashboard-grid {
+.dashboard-layout {
   display: grid;
 
-  grid-template-columns: repeat(auto-fit, minmax(320px, 320px));
+  grid-template-columns: 1.2fr 1fr;
 
-  row-gap: 7vh;
-  column-gap: 10vw;
-  justify-content: start;
+  grid-template-areas:
+    "contribution tasks"
+    "commit completion"
+    "commit deadlines";
+
+  gap: 12px;
+
+  width: 100%;
 }
 
 
@@ -53,27 +54,60 @@ body {
 ========================= */
 
 .card {
-  width: 33vw;
-  height: 40vh;
+  background: white;
+  border-radius: 18px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 
-  background-color: white;
+  padding: 16px;
 
-  border: 2px solid #dcdcdc;
-  border-radius: 16px;
+  width: 100%;
 
-  padding: 20px;
+  overflow: hidden;
 
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-
-  overflow-y: auto;
-
-  transition: transform 0.2s ease;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.08);
 }
 
+.card-title {
+  margin: 0 0 20px 0;
+
+  font-size: 1.3rem;
+  font-weight: 600;
+
+  color: #1f2937;
+}
+
+.contribution-card {
+  grid-area: contribution;
+  min-height: 180px;
+}
+
+.tasks-card {
+  grid-area: tasks;
+  min-height: 180px;
+}
+
+.commit-card {
+  grid-area: commit;
+  min-height: 120px;
+}
+
+.completion-card {
+  grid-area: completion;
+  min-height: 80px;
+}
+
+.deadline-card-wrapper {
+  grid-area: deadlines;
+  min-height: 120px;
+}
 
 /* =========================
    SIDEBAR
@@ -82,7 +116,7 @@ body {
 .sidebar {
   position: fixed;
 
-  width: 10vw;
+  width: 150px;
   height: 100vh;
 
   background-color: white;
@@ -93,7 +127,7 @@ body {
   justify-content: space-between;
   align-items: center;
 
-  padding: 20px 15px;
+  padding: 15px 10px;
 
   box-sizing: border-box;
 }
@@ -136,8 +170,24 @@ body {
   height: 40px;
 
   border-radius: 50%;
+  border: none;
 
   background-color: lightblue;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.profile-circle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(173, 216, 230, 0.6);
+}
+
+.profile-circle:active {
+  transform: scale(0.95);
 }
 
 /* =========================
@@ -145,12 +195,11 @@ body {
 ========================= */
 
 .project-completion-card {
+  width: 100%;
   background-color: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 16px;
-  padding: 24px;
-  width: 430px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  border: none;
+  padding: 0;
+  box-shadow: none;
 }
 
 .project-completion-header {
@@ -192,6 +241,16 @@ body {
   color: #635bff;
   font-weight: 500;
 }
+
+/* =========================
+   Tasks Dashboard Card
+========================= */
+
+.tasks-dashboard {
+  max-height: 300px;
+  overflow: hidden;
+}
+
 
 /* =========================
    Deadline Tracker Card
@@ -253,4 +312,25 @@ body {
   margin: 0;
   color: #374151;
   font-size: 15px;
+}
+
+
+/* =========================
+   To make it work on mobile screens
+========================= */
+
+@media (max-width: 1000px) {
+
+  .dashboard-layout {
+
+    grid-template-columns: 1fr;
+
+    grid-template-areas:
+      "contribution"
+      "tasks"
+      "completion"
+      "deadlines"
+      "commit";
+  }
+
 }

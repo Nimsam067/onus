@@ -3,10 +3,7 @@ function ProjectCompletion() {
 
   return (
     <div className="project-completion-card">
-      <div className="project-completion-header">
-        <h2>Project Completion</h2>
-      </div>
-
+        <h2 className="card-title">Project Completion</h2>
       <div className="progress-section">
         <div className="progress-bar-background">
           <div

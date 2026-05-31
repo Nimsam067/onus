@@ -24,11 +24,7 @@ function TaskCard({ task }) {
       <div className="task-footer">
 
         <span>
-          Created: {task.createdDate}
-        </span>
-
-        <span>
-          Assigned: {task.assignedTo}
+          Due: {task.due_date}
         </span>
 
       </div>

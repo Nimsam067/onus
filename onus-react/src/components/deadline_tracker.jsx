@@ -1,4 +1,5 @@
 function DeadlineTracker() {
+  // Backend integration will be added later
   const deadlines = [
     {
       id: 1,

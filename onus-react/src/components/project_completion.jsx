@@ -1,4 +1,5 @@
 function ProjectCompletion() {
+  // Backend integration will be added later
   const completionPercentage = 72;
 
   return (

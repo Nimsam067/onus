@@ -22,14 +22,13 @@ function App() {
         <div className="dashboard-layout">
 
           {/* The left column of the dashboard */}
-              <div className="card contribution-card">
-                <ContentDashboard />
-              </div>
-
               <div className="card commit-card">
                 <CommitProgress />
               </div>
 
+              <div className="card contribution-card">
+                <ContentDashboard />
+              </div>
 
 
           {/* The right column of the dashboard */}

@@ -2,6 +2,7 @@ import TaskCard from "./tasks_cards";
 
 
 function TasksDashboard() {
+  // Backend integration will be added later
   const tasks = [
   {
     id: 1,

@@ -86,7 +86,7 @@ body {
 }
 
 .contribution-card {
-  grid-area: contribution;
+  grid-area: commit;
   min-height: 180px;
 }
 
@@ -96,8 +96,8 @@ body {
 }
 
 .commit-card {
-  grid-area: commit;
-  min-height: 120px;
+  grid-area: contribution;
+  min-height: 80px;
 }
 
 .completion-card {
@@ -257,6 +257,7 @@ body {
 .tasks-grid {
   display: grid;
   overflow-y: auto;
+  scrollbar-width: thin;
   grid-template-columns: 1fr 1fr;
   min-height: 0;
   gap: 12px;
@@ -342,6 +343,10 @@ body {
 
 .deadline-card {
   width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
 }
 
 .deadline-header {
@@ -364,7 +369,16 @@ body {
 .deadline-list {
   display: flex;
   flex-direction: column;
-  gap: 22px;
+
+  gap: 12px;
+
+  overflow-y: auto;
+
+  scrollbar-width: thin;
+
+  flex: 1;
+
+  min-height: 0;
 }
 
 .deadline-row {
@@ -396,6 +410,110 @@ body {
   margin: 0;
   color: #374151;
   font-size: 15px;
+}
+
+/* =========================
+   Commit Progress
+========================= */
+
+.commit-progress {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.timeline-container {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  padding: 20px 5px;
+
+  scrollbar-width: thin;
+}
+
+.timeline-item {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  min-width: 90px;
+
+  flex-shrink: 0;
+}
+
+.timeline-item:not(:last-child)::after {
+  content: "";
+
+  position: absolute;
+
+  top: 11px;
+  left: calc(50% + 12px);
+
+  width: calc(100% + 60px);
+  height: 2px;
+
+  background-color: #d1d5db;
+
+  z-index: 1;
+}
+
+.timeline-circle {
+  width: 24px;
+  height: 24px;
+
+  border-radius: 50%;
+
+  background-color: #635bff;
+
+  cursor: pointer;
+
+  position: relative;
+  z-index: 2;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.timeline-circle:hover {
+  transform: scale(1.25);
+
+  box-shadow: 0 0 12px rgba(99, 91, 255, 0.5);
+}
+
+.latest-circle {
+  background-color: #10b981;
+
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.5);
+}
+
+.timeline-info {
+  margin-top: 10px;
+
+  text-align: center;
+}
+
+.timeline-info p {
+  margin: 0;
+
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  color: #1f2937;
+}
+
+.timeline-info span {
+  display: block;
+
+  font-size: 0.75rem;
+
+  color: #6b7280;
 }
 
 

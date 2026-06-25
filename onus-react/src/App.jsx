@@ -1,14 +1,18 @@
-import TaskDashboard from "./components/tasks_dashboard";
+import TasksDashboard from "./components/tasks_dashboard";
 import ContentDashboard from "./components/content_dashboard";
 import Sidebar from "./components/sidebar";
 import "./App.css";
 import DeadlineTracker from "./components/deadline_tracker";
 import ProjectCompletion from "./components/project_completion";
 import CommitProgress from "./components/commit_progress";
+import AddTaskModal from "./components/AddTaskModal";
+import { useState } from "react";
 
 
 
 function App() {
+  const [showModal, setShowModal] = useState(false);
+
   return (
     // The main container for all the app's contents
     <div className="app-container">
@@ -34,7 +38,9 @@ function App() {
 
           {/* The right column of the dashboard */}
             <div className="card tasks-card">
-              <TaskDashboard />
+              <TasksDashboard
+                onAddTask={() => setShowModal(true)}
+              />
             </div>
 
             <div className="card completion-card">
@@ -44,10 +50,13 @@ function App() {
             <div className="card deadline-card-wrapper">
               <DeadlineTracker />
             </div>
-
-
         </div>
       </div>
+      {showModal && (
+                <AddTaskModal
+                    onClose={() => setShowModal(false)}
+                />
+              )}
     </div>
   );
 }

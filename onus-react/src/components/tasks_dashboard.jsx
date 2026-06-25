@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import TaskCard from "./tasks_cards";
 import "../App.css";
@@ -28,14 +27,20 @@ function TasksDashboard() {
 
   return (
     <div className="tasks-dashboard">
-      <h1>Tasks Dashboard</h1>
-      {tasks.length === 0 ? (
-        <p>No tasks available</p>
-      ) : (
-        tasks.map((task) => (
-          <TaskCard key={task.id} task={task} />
-        ))
-      )}
+      <h2 className="card-title">Tasks Dashboard</h2>
+
+      <div className="tasks-grid">
+        {tasks.length === 0 ? (
+          <p>No tasks available</p>
+        ) : (
+          tasks.map((task) => (
+            <TaskCard
+              key={task.id}
+              task={task}
+            />
+          ))
+        )}
+      </div>
     </div>
   );
 }

@@ -9,6 +9,7 @@ import ProjectCompletion from "./components/project_completion";
 import CommitProgress from "./components/commit_progress";
 import AddTaskModal from "./components/AddTaskModal";
 import LoginPage from "./pages/LoginPage";
+import CalendarPage from "./pages/CalendarPage";
 
 function Dashboard({ onLogout }) {
   const [showModal, setShowModal] = useState(false);
@@ -73,6 +74,12 @@ function App() {
         path="/dashboard"
         element={
           isLoggedIn ? <Dashboard onLogout={handleLogout} /> : <Navigate to="/login" replace />
+        }
+      />
+      <Route
+        path="/calendar"
+        element={
+          isLoggedIn ? <CalendarPage /> : <Navigate to="/login" replace />
         }
       />
       <Route

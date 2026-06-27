@@ -1,27 +1,18 @@
 import { useEffect, useState } from "react";
 import TaskCard from "./tasks_cards";
+import { getTasks } from "../api/tasks";
 import "../App.css";
-
 
 function TasksDashboard({ onAddTask }) {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5001";
-
 
   useEffect(() => {
-    fetch(`${API_URL}/api/tasks`)
-      .then((res) => res.json())
-      .then((data) => {
-        setTasks(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Error fetching tasks:", err);
-        setError(err.message);
-        setLoading(false);
-      });
+    getTasks()
+      .then(setTasks)
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
   }, []);
 
   if (loading) return <div className="tasks-dashboard"><p>Loading tasks...</p></div>;
@@ -41,10 +32,7 @@ function TasksDashboard({ onAddTask }) {
           <p>No tasks available</p>
         ) : (
           tasks.map((task) => (
-            <TaskCard
-              key={task.id}
-              task={task}
-            />
+            <TaskCard key={task.id} task={task} />
           ))
         )}
       </div>

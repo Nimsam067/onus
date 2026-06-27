@@ -165,6 +165,14 @@ body {
   background-color: #333333;
 }
 
+.sidebar-button-active {
+  background-color: #635bff;
+}
+
+.sidebar-button-active:hover {
+  background-color: #4f46e5;
+}
+
 
 .profile-circle {
   width: 40px;

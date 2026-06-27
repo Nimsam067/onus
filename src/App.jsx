@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import TasksDashboard from "./components/tasks_dashboard";
 import ContentDashboard from "./components/content_dashboard";
 import Sidebar from "./components/sidebar";
@@ -6,58 +8,78 @@ import DeadlineTracker from "./components/deadline_tracker";
 import ProjectCompletion from "./components/project_completion";
 import CommitProgress from "./components/commit_progress";
 import AddTaskModal from "./components/AddTaskModal";
-import { useState } from "react";
+import LoginPage from "./pages/LoginPage";
 
-
-
-function App() {
+function Dashboard({ onLogout }) {
   const [showModal, setShowModal] = useState(false);
 
   return (
-    // The main container for all the app's contents
     <div className="app-container">
+      <Sidebar onLogout={onLogout} />
 
-      {/* The sidebar component on the left */}
-      <Sidebar />
-
-      {/* The main content area on the right */}
       <div className="main-content">
-
-        {/* The dashboard grid that holds all major components */}
         <div className="dashboard-layout">
+          <div className="card commit-card">
+            <CommitProgress />
+          </div>
 
-          {/* The left column of the dashboard */}
-              <div className="card commit-card">
-                <CommitProgress />
-              </div>
+          <div className="card contribution-card">
+            <ContentDashboard />
+          </div>
 
-              <div className="card contribution-card">
-                <ContentDashboard />
-              </div>
+          <div className="card tasks-card">
+            <TasksDashboard onAddTask={() => setShowModal(true)} />
+          </div>
 
+          <div className="card completion-card">
+            <ProjectCompletion />
+          </div>
 
-          {/* The right column of the dashboard */}
-            <div className="card tasks-card">
-              <TasksDashboard
-                onAddTask={() => setShowModal(true)}
-              />
-            </div>
-
-            <div className="card completion-card">
-             <ProjectCompletion />
-            </div>
-
-            <div className="card deadline-card-wrapper">
-              <DeadlineTracker />
-            </div>
+          <div className="card deadline-card-wrapper">
+            <DeadlineTracker />
+          </div>
         </div>
       </div>
-      {showModal && (
-                <AddTaskModal
-                    onClose={() => setShowModal(false)}
-                />
-              )}
+
+      {showModal && <AddTaskModal onClose={() => setShowModal(false)} />}
     </div>
+  );
+}
+
+function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    () => localStorage.getItem("onus_auth") === "true"
+  );
+
+  function handleLogin() {
+    localStorage.setItem("onus_auth", "true");
+    setIsLoggedIn(true);
+  }
+
+  function handleLogout() {
+    localStorage.removeItem("onus_auth");
+    setIsLoggedIn(false);
+  }
+
+  return (
+    <Routes>
+      <Route
+        path="/login"
+        element={
+          isLoggedIn ? <Navigate to="/dashboard" replace /> : <LoginPage onLogin={handleLogin} />
+        }
+      />
+      <Route
+        path="/dashboard"
+        element={
+          isLoggedIn ? <Dashboard onLogout={handleLogout} /> : <Navigate to="/login" replace />
+        }
+      />
+      <Route
+        path="*"
+        element={<Navigate to={isLoggedIn ? "/dashboard" : "/login"} replace />}
+      />
+    </Routes>
   );
 }
 

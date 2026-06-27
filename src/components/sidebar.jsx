@@ -1,4 +1,4 @@
-function Sidebar() {
+function Sidebar({ onLogout }) {
   return (
     <div className="sidebar">
       <div className="sidebar-top">
@@ -8,7 +8,12 @@ function Sidebar() {
         <button className="sidebar-button">Settings</button>
       </div>
 
-      <button className="profile-circle"></button>
+      <div className="sidebar-bottom">
+        <button className="profile-circle"></button>
+        <button className="sidebar-button logout-btn" onClick={onLogout}>
+          Log out
+        </button>
+      </div>
     </div>
   );
 }

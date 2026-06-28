@@ -1,10 +1,29 @@
 import { useState } from "react";
 import "./AddTaskModal.css"; 
+import { createTask } from "../api/tasks";
 
-function AddTaskModal({ onClose }) {
+function AddTaskModal({ onClose, onTaskCreated }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState("");
+
+  async function handleSubmit(e) {
+  e.preventDefault();
+
+  try {
+    await createTask({
+      title,
+      description,
+      dueDate,
+    });
+
+    onTaskCreated();
+    onClose();
+  } catch (err) {
+    console.error(err);
+    alert("Failed to create task.");
+  }
+  } 
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -17,7 +36,7 @@ function AddTaskModal({ onClose }) {
           <p>Create a new task for your project.</p>
         </div>
 
-        <form className="task-form">
+        <form className="task-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Title *</label>
 

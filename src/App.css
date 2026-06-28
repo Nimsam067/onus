@@ -353,8 +353,13 @@ body {
 .task-header input[type="checkbox"] {
   width: 16px;
   height: 16px;
-
+  flex-shrink: 0;
   cursor: pointer;
+}
+
+.task-menu-btn {
+  margin-left: auto;
+  flex-shrink: 0;
 }
 
 .task-header h3 {

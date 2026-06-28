@@ -1,6 +1,36 @@
-function ProjectCompletion() {
+import { useEffect, useState } from "react";
+import { getTasks } from "../api/tasks";
+
+function ProjectCompletion({ refresh }) {
   // Backend integration will be added later
-  const completionPercentage = 72;
+  const [completionPercentage, setCompletionPercentage] = useState(0);
+
+  useEffect(() => {
+  async function loadCompletion() {
+    try {
+      const tasks = await getTasks();
+
+      const totalTasks = tasks.length;
+
+      const completedTasks = tasks.filter(
+        (task) => task.completed
+      ).length;
+
+      const percentage =
+        totalTasks === 0
+          ? 0
+          : Math.round(
+              (completedTasks / totalTasks) * 100
+            );
+
+      setCompletionPercentage(percentage);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  loadCompletion();
+  }, [refresh]);
 
   return (
     <div className="project-completion-card">

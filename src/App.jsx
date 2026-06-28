@@ -45,7 +45,8 @@ function Dashboard({ onLogout }) {
           </div>
 
           <div className="card completion-card">
-            <ProjectCompletion />
+            <ProjectCompletion refresh={taskRefresh}
+            />
           </div>
 
           <div className="card deadline-card-wrapper">

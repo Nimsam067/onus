@@ -351,10 +351,11 @@ body {
 }
 
 .task-header input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
-  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  transform: scale(1.15);
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .task-menu-btn {

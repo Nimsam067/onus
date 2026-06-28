@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react";
 import TaskCard from "./tasks_cards";
-import { getTasks } from "../api/tasks";
 import "../App.css";
+import {
+  getTasks,
+  deleteTask,
+} from "../api/tasks";
 
-function TasksDashboard({ onAddTask, refresh }) {
+function TasksDashboard({
+  onAddTask,
+  refresh,
+  onEditTask,
+}) {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -16,6 +23,21 @@ function TasksDashboard({ onAddTask, refresh }) {
     .catch((err) => setError(err.message))
     .finally(() => setLoading(false));
   }, [refresh]);
+
+  async function handleDelete(id) {
+    try {
+      await deleteTask(id);
+
+      const updatedTasks = await getTasks();
+      setTasks(updatedTasks);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  function handleEdit(task) {
+    onEditTask(task);
+  }
 
   if (loading) return <div className="tasks-dashboard"><p>Loading tasks...</p></div>;
   if (error) return <div className="tasks-dashboard"><p>Error: {error}</p></div>;
@@ -34,7 +56,12 @@ function TasksDashboard({ onAddTask, refresh }) {
           <p>No tasks available</p>
         ) : (
           tasks.map((task) => (
-            <TaskCard key={task.id} task={task} />
+            <TaskCard
+              key={task.id}
+              task={task}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+            />
           ))
         )}
       </div>

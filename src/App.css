@@ -95,6 +95,8 @@ body {
   min-height: 180px;
 }
 
+
+
 .commit-card {
   grid-area: contribution;
   min-height: 80px;
@@ -320,6 +322,32 @@ body {
   align-items: center;
   gap: 10px;
   margin-bottom: 10px;
+  position: relative;
+}
+
+.task-menu {
+  position: absolute;
+  top: 35px;
+  right: 0;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  overflow: hidden;
+  z-index: 100;
+}
+
+.task-menu button {
+  display: block;
+  width: 100%;
+  padding: 10px 20px;
+  border: none;
+  background: white;
+  text-align: left;
+  cursor: pointer;
+}
+
+.task-menu button:hover {
+  background: #f3f4f6;
 }
 
 .task-header input[type="checkbox"] {

@@ -1,4 +1,13 @@
-function TaskCard({ task }) {
+import { useState } from "react";
+
+function TaskCard({
+  task,
+  onEdit,
+  onDelete,
+}) { 
+
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <div
       className={`task-card ${
@@ -6,16 +15,48 @@ function TaskCard({ task }) {
       }`}
     >
       <div className="task-header">
+  <input
+    type="checkbox"
+    checked={task.completed}
+    readOnly
+  />
 
-        <input
-          type="checkbox"
-          checked={task.completed}
-          readOnly
-        />
+  <h3>{task.title}</h3>
 
-        <h3>{task.title}</h3>
+  <button
+    className="task-menu-btn"
+    onClick={(e) => {
+      e.stopPropagation();
+      setMenuOpen(!menuOpen);
+    }}
+  >
+    ⋮
+  </button>
 
-      </div>
+  {menuOpen && (
+    <div className="task-menu">
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          onEdit(task);
+          setMenuOpen(false);
+        }}
+      >
+        Edit
+      </button>
+
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          onDelete(task.id);
+          setMenuOpen(false);
+        }}
+      >
+        Delete
+      </button>
+    </div>
+      )}
+    </div>
 
       <p className="task-description">
         {task.description}

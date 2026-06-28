@@ -1,29 +1,53 @@
 import { useState } from "react";
 import "./AddTaskModal.css"; 
-import { createTask } from "../api/tasks";
+import {
+  createTask,
+  updateTask,
+} from "../api/tasks";
 
-function AddTaskModal({ onClose, onTaskCreated }) {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [dueDate, setDueDate] = useState("");
+function AddTaskModal({
+  task,
+  onClose,
+  onTaskCreated,
+}) {
+const [title, setTitle] = useState(
+  task?.title || ""
+);
+
+const [description, setDescription] = useState(
+  task?.description || ""
+);
+
+const [dueDate, setDueDate] = useState(
+  task?.due_date?.slice(0, 10) || ""
+);
 
   async function handleSubmit(e) {
   e.preventDefault();
 
   try {
-    await createTask({
-      title,
-      description,
-      dueDate,
-    });
+    if (task) {
+      await updateTask(task.id, {
+        title,
+        description,
+        dueDate,
+        completed: task.completed,
+      });
+    } else {
+      await createTask({
+        title,
+        description,
+        dueDate,
+      });
+    }
 
     onTaskCreated();
     onClose();
   } catch (err) {
     console.error(err);
-    alert("Failed to create task.");
+    alert("Failed to save task.");
   }
-  } 
+}
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -32,7 +56,7 @@ function AddTaskModal({ onClose, onTaskCreated }) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="modal-header">
-          <h2>Add New Task</h2>
+          <h2>{task ? "Edit Task" : "Add New Task"}</h2>
           <p>Create a new task for your project.</p>
         </div>
 
@@ -83,7 +107,7 @@ function AddTaskModal({ onClose, onTaskCreated }) {
               className="create-btn"
               disabled={!title.trim()}
             >
-              Create Task
+            {task ? "Save Changes" : "Create Task"}
             </button>
           </div>
         </form>

@@ -14,6 +14,7 @@ import CalendarPage from "./pages/CalendarPage";
 function Dashboard({ onLogout }) {
   const [showModal, setShowModal] = useState(false);
   const [taskRefresh, setTaskRefresh] = useState(0);
+  const [editingTask, setEditingTask] = useState(null);
 
   return (
     <div className="app-container">
@@ -30,10 +31,17 @@ function Dashboard({ onLogout }) {
           </div>
 
           <div className="card tasks-card">
-            <TasksDashboard 
-            refresh={taskRefresh}
-            onAddTask={() => setShowModal(true)} 
-            />
+            <TasksDashboard
+              refresh={taskRefresh}
+              onAddTask={() => {
+                setEditingTask(null);
+                setShowModal(true);
+          }}
+              onEditTask={(task) => {
+              setEditingTask(task);
+              setShowModal(true);
+          }}
+/>
           </div>
 
           <div className="card completion-card">
@@ -48,8 +56,12 @@ function Dashboard({ onLogout }) {
 
       {showModal && (
         <AddTaskModal
-        onClose={() => setShowModal(false)}
-        onTaskCreated={() => setTaskRefresh((r) => r + 1)}
+          task={editingTask}
+          onClose={() => {
+            setShowModal(false);
+            setEditingTask(null);
+          }}
+          onTaskCreated={() => setTaskRefresh((r) => r + 1)}
         />
       )}
     </div>

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { getTasks } from "../api/tasks";
 import { getDeadlines } from "../api/deadlines";
 import "./CalendarPage.css";
+import { useNavigate } from "react-router-dom";
 
 const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const MONTHS = [
@@ -10,6 +11,8 @@ const MONTHS = [
 ];
 
 function CalendarPage() {
+  const navigate = useNavigate();
+
   const today = new Date();
   const [current, setCurrent] = useState({
     month: today.getMonth(),
@@ -78,6 +81,12 @@ function CalendarPage() {
 
   return (
     <div className="calendar-page">
+      <button
+      className="back-btn"
+      onClick={() => navigate("/")}
+      >
+        ← Back to Dashboard
+      </button>
       <div className="calendar-card">
         <div className="cal-header">
           <button className="cal-nav-btn" onClick={prevMonth}>&#8249;</button>

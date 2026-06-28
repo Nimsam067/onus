@@ -4,6 +4,7 @@ import "../App.css";
 import {
   getTasks,
   deleteTask,
+  updateTask,
 } from "../api/tasks";
 
 function TasksDashboard({
@@ -35,6 +36,22 @@ function TasksDashboard({
     }
   }
 
+  async function handleToggleComplete(task) {
+  try {
+    await updateTask(task.id, {
+      title: task.title,
+      description: task.description,
+      dueDate: task.due_date,
+      completed: !task.completed,
+    });
+
+    const updatedTasks = await getTasks();
+    setTasks(updatedTasks);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
   function handleEdit(task) {
     onEditTask(task);
   }
@@ -61,6 +78,7 @@ function TasksDashboard({
               task={task}
               onEdit={handleEdit}
               onDelete={handleDelete}
+              onToggleComplete={handleToggleComplete}
             />
           ))
         )}

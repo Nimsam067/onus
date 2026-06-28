@@ -4,6 +4,7 @@ function TaskCard({
   task,
   onEdit,
   onDelete,
+  onToggleComplete,
 }) { 
 
   const [menuOpen, setMenuOpen] = useState(false);
@@ -18,7 +19,7 @@ function TaskCard({
   <input
     type="checkbox"
     checked={task.completed}
-    readOnly
+    onChange={() => onToggleComplete(task)}
   />
 
   <h3>{task.title}</h3>

@@ -33,8 +33,6 @@
     opacity 0.2s ease;
 
   cursor: pointer;
-
-  min-height: 220px;
 }
 
 .task-card:hover {

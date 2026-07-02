@@ -95,8 +95,6 @@ body {
   min-height: 180px;
 }
 
-
-
 .commit-card {
   grid-area: contribution;
   min-height: 80px;
@@ -111,6 +109,7 @@ body {
   grid-area: deadlines;
   min-height: 120px;
 }
+
 
 /* =========================
    To make it work on mobile screens

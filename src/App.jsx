@@ -26,17 +26,16 @@ import "./components/deadline_tracker.css";
 import "./components/sidebar.css";
 import "./components/contribution_chart.css";
 
+/* Layout Helper */
+import Layout from "./layout";
 
-function Dashboard({ onLogout }) {
+
+function DashboardPage() {
   const [showModal, setShowModal] = useState(false);
   const [taskRefresh, setTaskRefresh] = useState(0);
   const [editingTask, setEditingTask] = useState(null);
 
   return (
-    <div className="app-container">
-      <Sidebar onLogout={onLogout} />
-
-      <div className="main-content">
         <div className="dashboard-layout">
           <div className="card commit-card">
             <CommitProgress />
@@ -68,8 +67,6 @@ function Dashboard({ onLogout }) {
           <div className="card deadline-card-wrapper">
             <DeadlineTracker />
           </div>
-        </div>
-      </div>
 
       {showModal && (
         <AddTaskModal
@@ -109,17 +106,22 @@ function App() {
         }
       />
       <Route
-        path="/dashboard"
         element={
-          isLoggedIn ? <Dashboard onLogout={handleLogout} /> : <Navigate to="/login" replace />
+        isLoggedIn
+          ? <Layout onLogout={handleLogout} />
+          : <Navigate to="/login" replace />
         }
+      >
+      <Route
+        path="/dashboard"
+        element={<DashboardPage />}
       />
+
       <Route
         path="/calendar"
-        element={
-          isLoggedIn ? <CalendarPage /> : <Navigate to="/login" replace />
-        }
+        element={<CalendarPage />}
       />
+      </Route>
       <Route
         path="*"
         element={<Navigate to={isLoggedIn ? "/dashboard" : "/login"} replace />}

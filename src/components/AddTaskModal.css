@@ -141,6 +141,8 @@
     font-weight: 600;
 
     transition: .2s;
+
+    color: black;
 }
 
 .cancel-btn:hover {

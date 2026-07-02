@@ -1,0 +1,28 @@
+/* =========================
+   Contribution Chart
+========================= */
+
+.content-dashboard {
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-container {
+  flex: 1;
+  min-height: 0;
+}
+
+.legend-item {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.contribution-legend {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}

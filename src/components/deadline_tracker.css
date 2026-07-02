@@ -1,0 +1,74 @@
+/* =========================
+   Deadline Tracker Card
+========================= */
+
+.deadline-card {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.deadline-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.deadline-header h2 {
+  font-size: 18px;
+  margin: 0;
+  color: #1f2937;
+}
+
+.deadline-icon {
+  font-size: 22px;
+}
+
+.deadline-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+
+  overflow-y: auto;
+
+  scrollbar-width: thin;
+
+  flex: 1;
+
+  min-height: 0;
+}
+
+.deadline-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.deadline-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.small-calendar-icon {
+  background-color: #f3f0ff;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 18px;
+}
+
+.deadline-left p {
+  margin: 0;
+  color: #1f2937;
+  font-size: 15px;
+}
+
+.deadline-date {
+  margin: 0;
+  color: #374151;
+  font-size: 15px;
+}

@@ -7,7 +7,7 @@ import {
   ResponsiveContainer
 } from "recharts";
 
-function ContentDashboard() {
+function ContributionChart() {
     // Backend integration will be added later
     const contributionData = [
     {
@@ -127,4 +127,4 @@ function ContentDashboard() {
     );
 }
 
-export default ContentDashboard;
+export default ContributionChart;

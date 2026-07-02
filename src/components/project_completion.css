@@ -1,0 +1,51 @@
+/* =========================
+   Project Completion Card
+========================= */
+
+.project-completion-card {
+  width: 100%;
+  background-color: white;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+}
+
+.project-completion-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.project-completion-header h2 {
+  margin: 0;
+  font-size: 18px;
+  color: #1f2937;
+}
+
+.progress-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.progress-bar-background {
+  flex: 1;
+  height: 12px;
+  background-color: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: #635bff;
+  border-radius: 999px;
+}
+
+.progress-percentage {
+  margin: 0;
+  font-size: 24px;
+  color: #635bff;
+  font-weight: 500;
+}

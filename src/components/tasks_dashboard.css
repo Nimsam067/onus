@@ -168,6 +168,21 @@
 }
 
 /* =========================
+   Edit and Delete Buttons
+========================= */
+
+.edit-btn:hover {
+  background: #eef2ff !important;
+  color: #4f46e5;
+}
+
+.delete-btn:hover {
+  background: #fef2f2 !important;
+  color: #ef4444;
+}
+
+
+/* =========================
    Modal Styling
 ========================= */
 

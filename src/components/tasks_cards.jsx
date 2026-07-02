@@ -37,6 +37,7 @@ function TaskCard({
   {menuOpen && (
     <div className="task-menu">
       <button
+        className="edit-btn"
         onClick={(e) => {
           e.stopPropagation();
           onEdit(task);
@@ -47,6 +48,7 @@ function TaskCard({
       </button>
 
       <button
+        className="delete-btn"
         onClick={(e) => {
           e.stopPropagation();
           onDelete(task.id);
@@ -66,7 +68,11 @@ function TaskCard({
       <div className="task-footer">
 
         <span>
-          Due: {task.due_date}
+          Due: {new Date(task.due_date).toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+          })}
         </span>
 
       </div>

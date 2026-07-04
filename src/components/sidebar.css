@@ -4,87 +4,102 @@
 
 .sidebar {
   position: fixed;
-
-  width: 150px;
+  width: 52px;
   height: 100vh;
-
-  background-color: white;
-  border-right: 2px solid #dcdcdc;
-
+  background-color: #1e293b;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
-
-  padding: 15px 10px;
-
+  align-items: flex-start;
+  padding: 16px 8px;
   box-sizing: border-box;
+  overflow: hidden;
+  transition: width 0.3s ease;
+  z-index: 100;
+}
+
+.sidebar-open {
+  width: 220px;
 }
 
 .sidebar-top {
   display: flex;
   flex-direction: column;
-
-  gap: 20px;
-
+  gap: 4px;
   width: 100%;
-
-  align-items: center;
 }
 
 .sidebar-button {
   width: 100%;
-
+  display: flex;
+  align-items: center;
+  gap: 14px;
   border: none;
-
-  background: black;
-  color: white;
-
-  padding: 10px;
-
+  background: transparent;
+  color: #94a3b8;
+  padding: 10px 8px;
   border-radius: 10px;
-
   cursor: pointer;
-
-  transition: background-color 0.2s ease;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  font-size: 0.9rem;
+  font-family: Poppins, sans-serif;
+  font-weight: 500;
+  text-align: left;
 }
 
 .sidebar-button:hover {
-  background-color: #333333;
+  background-color: #334155;
+  color: #f1f5f9;
 }
 
 .sidebar-button-active {
   background-color: #635bff;
+  color: white;
 }
 
 .sidebar-button-active:hover {
   background-color: #4f46e5;
+  color: white;
 }
 
-/*==========================
-   Profile Circle and Logout Button Styling
-========================= */
+.hamburger-btn {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  color: #cbd5e1;
+}
 
+.nav-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  width: 24px;
+  text-align: center;
+}
+
+.nav-label {
+  font-size: 0.9rem;
+}
+
+/* ==========================
+   Profile Circle and Logout
+========================== */
 
 .profile-circle {
-  width: 40px;
-  height: 40px;
-
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   border: none;
-
-  background-color: lightblue;
-
+  background-color: #635bff;
   cursor: pointer;
-
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
+  flex-shrink: 0;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  margin-left: 4px;
+  margin-bottom: 4px;
 }
 
 .profile-circle:hover {
   transform: scale(1.1);
-  box-shadow: 0 0 15px rgba(173, 216, 230, 0.6);
+  box-shadow: 0 0 15px rgba(99, 91, 255, 0.5);
 }
 
 .profile-circle:active {
@@ -94,20 +109,18 @@
 .sidebar-bottom {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 12px;
+  align-items: flex-start;
+  gap: 8px;
   width: 100%;
 }
 
 .logout-btn {
   background: transparent;
-  color: #6b7280;
-  border: 1px solid #e5e7eb;
-  font-size: 0.8rem;
+  color: #64748b;
+  border: none;
 }
 
 .logout-btn:hover {
-  background: #fef2f2;
-  color: #ef4444;
-  border-color: #fecaca;
+  background: #3b1f1f;
+  color: #f87171;
 }

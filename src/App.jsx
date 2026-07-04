@@ -14,6 +14,7 @@ import Sidebar from "./components/sidebar";
 /* Pages */
 import LoginPage from "./pages/LoginPage";
 import CalendarPage from "./pages/CalendarPage";
+import TasksPage from "./pages/TasksPage";
 
 
 /* Styling Documents */
@@ -120,6 +121,10 @@ function App() {
       <Route
         path="/calendar"
         element={<CalendarPage />}
+      />
+      <Route
+        path="/tasks"
+        element={<TasksPage />}
       />
       </Route>
       <Route

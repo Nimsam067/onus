@@ -2,7 +2,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 const NAV_ITEMS = [
   { label: "Home",     path: "/dashboard" },
-  { label: "Tasks",    path: "/dashboard" },
+  { label: "Tasks",    path: "/tasks" },
   { label: "Calendar", path: "/calendar" },
   { label: "Settings", path: "/settings" },
 ];

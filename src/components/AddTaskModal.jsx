@@ -1,69 +1,54 @@
 import { useState } from "react";
-import "./AddTaskModal.css"; 
-import {
-  createTask,
-  updateTask,
-} from "../api/tasks";
+import "./AddTaskModal.css";
+import { createTask, updateTask } from "../api/tasks";
 
-function AddTaskModal({
-  task,
-  onClose,
-  onTaskCreated,
-}) {
-const [title, setTitle] = useState(
-  task?.title || ""
-);
+const STATUS_OPTIONS = [
+  { value: "not_started", label: "Not Started" },
+  { value: "in_progress", label: "In Progress" },
+  { value: "done",        label: "Done" },
+];
 
-const [description, setDescription] = useState(
-  task?.description || ""
-);
-
-const [dueDate, setDueDate] = useState(
-  task?.due_date?.slice(0, 10) || ""
-);
+function AddTaskModal({ task, onClose, onTaskCreated }) {
+  const [title,       setTitle]       = useState(task?.title || "");
+  const [description, setDescription] = useState(task?.description || "");
+  const [dueDate,     setDueDate]     = useState(task?.due_date?.slice(0, 10) || "");
+  const [assignee,    setAssignee]    = useState(task?.assignee || "");
+  const [status,      setStatus]      = useState(task?.status || "not_started");
 
   async function handleSubmit(e) {
-  e.preventDefault();
-
-  try {
-    if (task) {
-      await updateTask(task.id, {
-        title,
-        description,
-        dueDate,
-        completed: task.completed,
-      });
-    } else {
-      await createTask({
-        title,
-        description,
-        dueDate,
-      });
+    e.preventDefault();
+    try {
+      if (task) {
+        await updateTask(task.id, {
+          title,
+          description,
+          dueDate,
+          completed: task.completed,
+          status,
+          assignee,
+        });
+      } else {
+        await createTask({ title, description, dueDate, status, assignee });
+      }
+      onTaskCreated();
+      onClose();
+    } catch (err) {
+      console.error(err);
+      alert("Failed to save task.");
     }
-
-    onTaskCreated();
-    onClose();
-  } catch (err) {
-    console.error(err);
-    alert("Failed to save task.");
   }
-}
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div
-        className="modal-container"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="modal-container" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h2>{task ? "Edit Task" : "Add New Task"}</h2>
-          <p>Create a new task for your project.</p>
+          <p>Fill in the details for this task.</p>
         </div>
 
         <form className="task-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Title *</label>
-
             <input
               type="text"
               placeholder="Enter task title..."
@@ -74,40 +59,50 @@ const [dueDate, setDueDate] = useState(
 
           <div className="form-group">
             <label>Description</label>
-
             <textarea
-              rows="5"
+              rows="3"
               placeholder="Describe this task..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
           </div>
 
-          <div className="form-group">
-            <label>Due Date</label>
+          <div className="form-row">
+            <div className="form-group">
+              <label>Due Date</label>
+              <input
+                type="date"
+                value={dueDate}
+                onChange={(e) => setDueDate(e.target.value)}
+              />
+            </div>
 
+            <div className="form-group">
+              <label>Status</label>
+              <select value={status} onChange={(e) => setStatus(e.target.value)}>
+                {STATUS_OPTIONS.map((o) => (
+                  <option key={o.value} value={o.value}>{o.label}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label>In Charge</label>
             <input
-              type="date"
-              value={dueDate}
-              onChange={(e) => setDueDate(e.target.value)}
+              type="text"
+              placeholder="Who is responsible?"
+              value={assignee}
+              onChange={(e) => setAssignee(e.target.value)}
             />
           </div>
 
           <div className="button-row">
-            <button
-              type="button"
-              className="cancel-btn"
-              onClick={onClose}
-            >
+            <button type="button" className="cancel-btn" onClick={onClose}>
               Cancel
             </button>
-
-            <button
-              type="submit"
-              className="create-btn"
-              disabled={!title.trim()}
-            >
-            {task ? "Save Changes" : "Create Task"}
+            <button type="submit" className="create-btn" disabled={!title.trim()}>
+              {task ? "Save Changes" : "Create Task"}
             </button>
           </div>
         </form>

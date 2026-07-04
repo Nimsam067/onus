@@ -22,33 +22,68 @@ body {
   font-family: Poppins, sans-serif;
 }
 
-.main-content {
-  flex: 1;
-  padding: 20px;
-  padding-top: 64px;
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 150;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.top-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.top-bar-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1f2937;
+  font-family: Poppins, sans-serif;
+}
+
+.top-bar-team {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #635bff;
+  background: #f0effe;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-family: Poppins, sans-serif;
 }
 
 .hamburger-btn {
-  position: fixed;
-  top: 14px;
-  left: 14px;
-  z-index: 200;
-  background: #1e293b;
-  color: #f1f5f9;
+  background: transparent;
+  color: #1e293b;
   border: none;
-  border-radius: 8px;
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
   font-size: 1.2rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 8px;
   transition: background 0.2s ease;
 }
 
 .hamburger-btn:hover {
-  background: #334155;
+  background: #f1f5f9;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  padding-top: 76px;
 }
 
 .sidebar-overlay {

@@ -5,9 +5,9 @@
 .sidebar {
   position: fixed;
   left: 0;
-  top: 0;
+  top: 56px;
   width: 220px;
-  height: 100vh;
+  height: calc(100vh - 56px);
   background-color: #1e293b;
   display: flex;
   flex-direction: column;
@@ -28,7 +28,6 @@
   flex-direction: column;
   gap: 4px;
   width: 100%;
-  margin-top: 56px;
 }
 
 .sidebar-button {

@@ -7,7 +7,13 @@ function Layout({ onLogout }) {
 
   return (
     <div className="app-container">
-      <button className="hamburger-btn" onClick={() => setIsOpen(!isOpen)}>☰</button>
+      <div className="top-bar">
+        <div className="top-bar-left">
+          <button className="hamburger-btn" onClick={() => setIsOpen(!isOpen)}>☰</button>
+          <span className="top-bar-title">Name's Dashboard</span>
+        </div>
+        <span className="top-bar-team">CS1010</span>
+      </div>
 
       {isOpen && <div className="sidebar-overlay" onClick={() => setIsOpen(false)} />}
 

@@ -4,22 +4,23 @@
 
 .sidebar {
   position: fixed;
-  width: 52px;
+  left: 0;
+  top: 0;
+  width: 220px;
   height: 100vh;
   background-color: #1e293b;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: flex-start;
-  padding: 16px 8px;
+  padding: 20px 12px;
   box-sizing: border-box;
-  overflow: hidden;
-  transition: width 0.3s ease;
+  transform: translateX(-220px);
+  transition: transform 0.3s ease;
   z-index: 100;
 }
 
 .sidebar-open {
-  width: 220px;
+  transform: translateX(0);
 }
 
 .sidebar-top {
@@ -27,25 +28,22 @@
   flex-direction: column;
   gap: 4px;
   width: 100%;
+  margin-top: 56px;
 }
 
 .sidebar-button {
   width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 14px;
   border: none;
   background: transparent;
   color: #94a3b8;
-  padding: 10px 8px;
+  padding: 11px 14px;
   border-radius: 10px;
   cursor: pointer;
-  white-space: nowrap;
-  transition: background-color 0.2s ease, color 0.2s ease;
-  font-size: 0.9rem;
+  text-align: left;
+  font-size: 0.95rem;
   font-family: Poppins, sans-serif;
   font-weight: 500;
-  text-align: left;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .sidebar-button:hover {
@@ -63,37 +61,18 @@
   color: white;
 }
 
-.hamburger-btn {
-  font-size: 1.1rem;
-  margin-bottom: 8px;
-  color: #cbd5e1;
-}
-
-.nav-icon {
-  font-size: 1.1rem;
-  flex-shrink: 0;
-  width: 24px;
-  text-align: center;
-}
-
-.nav-label {
-  font-size: 0.9rem;
-}
-
 /* ==========================
    Profile Circle and Logout
 ========================== */
 
 .profile-circle {
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   border: none;
   background-color: #635bff;
   cursor: pointer;
-  flex-shrink: 0;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
-  margin-left: 4px;
   margin-bottom: 4px;
 }
 
@@ -102,22 +81,15 @@
   box-shadow: 0 0 15px rgba(99, 91, 255, 0.5);
 }
 
-.profile-circle:active {
-  transform: scale(0.95);
-}
-
 .sidebar-bottom {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   gap: 8px;
   width: 100%;
 }
 
 .logout-btn {
-  background: transparent;
   color: #64748b;
-  border: none;
 }
 
 .logout-btn:hover {

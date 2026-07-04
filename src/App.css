@@ -24,9 +24,38 @@ body {
 
 .main-content {
   flex: 1;
-
-  margin-left: 52px;
   padding: 20px;
+  padding-top: 64px;
+}
+
+.hamburger-btn {
+  position: fixed;
+  top: 14px;
+  left: 14px;
+  z-index: 200;
+  background: #1e293b;
+  color: #f1f5f9;
+  border: none;
+  border-radius: 8px;
+  width: 38px;
+  height: 38px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+.hamburger-btn:hover {
+  background: #334155;
+}
+
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background: rgba(0, 0, 0, 0.25);
 }
 
 /* =========================

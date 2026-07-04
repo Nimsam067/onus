@@ -128,8 +128,10 @@
   font-size: 0.95rem;
   font-family: inherit;
   background: white;
+  color: #1f2937;
   cursor: pointer;
   transition: 0.2s;
+  color-scheme: light;
 }
 
 .form-group select:focus {

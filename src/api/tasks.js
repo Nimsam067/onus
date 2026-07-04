@@ -14,7 +14,7 @@ const USE_MOCK = false;
 
 export async function getTasks() {
   if (USE_MOCK) return MOCK_TASKS;
-  const res = await fetch(`${API_URL}/api/tasks`);
+  const res = await fetch(`${API_URL}/api/tasks`, { cache: "no-store" });
   if (!res.ok) throw new Error("Failed to fetch tasks");
   return res.json();
 }

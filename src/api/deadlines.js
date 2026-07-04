@@ -11,7 +11,7 @@ const USE_MOCK = false;
 
 export async function getDeadlines() {
   if (USE_MOCK) return MOCK_DEADLINES;
-  const res = await fetch(`${API_URL}/api/deadlines`);
+  const res = await fetch(`${API_URL}/api/deadlines`, { cache: "no-store" });
   if (!res.ok) throw new Error("Failed to fetch deadlines");
   return res.json();
 }

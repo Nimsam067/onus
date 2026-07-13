@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "../firebase";
+import logo from "../logo.png";
 import "./LoginPage.css";
 
 function LoginPage() {
@@ -25,14 +26,15 @@ function LoginPage() {
 
   return (
     <div className="login-page">
+      <img src={logo} alt="" className="login-bg-logo" />
       <div className="login-card">
         <div className="login-logo">
           <div className="login-logo-icon">O</div>
           <span className="login-logo-text">onus</span>
         </div>
 
-        <h1 className="login-title">Welcome</h1>
-        <p className="login-subtitle">Sign in to your workspace</p>
+        <h1 className="login-title">Welcome!</h1>
+        <p className="login-subtitle">Sign in to your workspace with Google</p>
 
         {error && <p className="login-error">{error}</p>}
 

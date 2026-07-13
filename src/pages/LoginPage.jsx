@@ -1,32 +1,26 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { signInWithPopup } from "firebase/auth";
+import { auth, googleProvider } from "../firebase";
 import "./LoginPage.css";
 
-// Mock credentials — swap these out when the real auth API is ready
-const MOCK_EMAIL = "demo@onus.app";
-const MOCK_PASSWORD = "password";
-
-function LoginPage({ onLogin }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+function LoginPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  function handleSubmit(e) {
-    e.preventDefault();
+  async function handleGoogleSignIn() {
     setError("");
     setLoading(true);
-
-    setTimeout(() => {
-      if (email === MOCK_EMAIL && password === MOCK_PASSWORD) {
-        onLogin();
-        navigate("/dashboard");
-      } else {
-        setError("Invalid email or password.");
-        setLoading(false);
+    try {
+      await signInWithPopup(auth, googleProvider);
+      navigate("/dashboard");
+    } catch (err) {
+      if (err.code !== "auth/popup-closed-by-user") {
+        setError("Sign-in failed. Please try again.");
       }
-    }, 600);
+      setLoading(false);
+    }
   }
 
   return (
@@ -37,47 +31,24 @@ function LoginPage({ onLogin }) {
           <span className="login-logo-text">onus</span>
         </div>
 
-        <h1 className="login-title">Welcome back</h1>
+        <h1 className="login-title">Welcome</h1>
         <p className="login-subtitle">Sign in to your workspace</p>
 
-        <form className="login-form" onSubmit={handleSubmit}>
-          <div className="login-field">
-            <label>Email</label>
-            <input
-              type="email"
-              placeholder="you@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              autoFocus
-            />
-          </div>
+        {error && <p className="login-error">{error}</p>}
 
-          <div className="login-field">
-            <label>Password</label>
-            <input
-              type="password"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-
-          {error && <p className="login-error">{error}</p>}
-
-          <button
-            type="submit"
-            className="login-btn"
-            disabled={loading || !email || !password}
-          >
-            {loading ? "Signing in..." : "Sign in"}
-          </button>
-        </form>
-
-        <p className="login-hint">
-          Demo: <code>demo@onus.app</code> / <code>password</code>
-        </p>
+        <button
+          className="google-btn"
+          onClick={handleGoogleSignIn}
+          disabled={loading}
+        >
+          <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>
+            <path d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/>
+            <path d="M3.964 10.707A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z" fill="#FBBC05"/>
+            <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.96L3.964 7.293C4.672 5.163 6.656 3.58 9 3.58z" fill="#EA4335"/>
+          </svg>
+          {loading ? "Signing in..." : "Continue with Google"}
+        </button>
       </div>
     </div>
   );

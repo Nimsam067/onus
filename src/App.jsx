@@ -1,6 +1,8 @@
 /* Navigation Helpers */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "./firebase";
 
 /* Components */
 import DeadlineTracker from "./components/deadline_tracker";
@@ -84,52 +86,38 @@ function DashboardPage() {
 }
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    () => localStorage.getItem("onus_auth") === "true"
-  );
+  // undefined = still checking, null = logged out, object = logged in
+  const [user, setUser] = useState(undefined);
 
-  function handleLogin() {
-    localStorage.setItem("onus_auth", "true");
-    setIsLoggedIn(true);
-  }
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      setUser(firebaseUser ?? null);
+    });
+    return unsubscribe;
+  }, []);
 
-  function handleLogout() {
-    localStorage.removeItem("onus_auth");
-    setIsLoggedIn(false);
-  }
+  if (user === undefined) return null;
 
   return (
     <Routes>
       <Route
         path="/login"
-        element={
-          isLoggedIn ? <Navigate to="/dashboard" replace /> : <LoginPage onLogin={handleLogin} />
-        }
+        element={user ? <Navigate to="/dashboard" replace /> : <LoginPage />}
       />
       <Route
         element={
-        isLoggedIn
-          ? <Layout onLogout={handleLogout} />
-          : <Navigate to="/login" replace />
+          user
+            ? <Layout user={user} onLogout={() => signOut(auth)} />
+            : <Navigate to="/login" replace />
         }
       >
-      <Route
-        path="/dashboard"
-        element={<DashboardPage />}
-      />
-
-      <Route
-        path="/calendar"
-        element={<CalendarPage />}
-      />
-      <Route
-        path="/tasks"
-        element={<TasksPage />}
-      />
+        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/calendar" element={<CalendarPage />} />
+        <Route path="/tasks" element={<TasksPage />} />
       </Route>
       <Route
         path="*"
-        element={<Navigate to={isLoggedIn ? "/dashboard" : "/login"} replace />}
+        element={<Navigate to={user ? "/dashboard" : "/login"} replace />}
       />
     </Routes>
   );

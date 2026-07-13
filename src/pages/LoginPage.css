@@ -134,18 +134,30 @@
   cursor: not-allowed;
 }
 
-/* Demo hint */
-.login-hint {
-  margin: 20px 0 0 0;
-  text-align: center;
-  font-size: 0.78rem;
-  color: #9ca3af;
+.google-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  background: white;
+  font-size: 0.95rem;
+  font-weight: 500;
+  font-family: Poppins, sans-serif;
+  color: #1f2937;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
 }
 
-.login-hint code {
-  background: #f3f4f6;
-  border-radius: 4px;
-  padding: 1px 5px;
-  font-size: 0.78rem;
-  color: #6b7280;
+.google-btn:hover:not(:disabled) {
+  background: #f9fafb;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.google-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }

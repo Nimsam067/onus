@@ -6,7 +6,7 @@ const STATUS_LABELS = {
   done: "Done",
 };
 
-function TaskCard({ task, onEdit, onDelete }) {
+function TaskCard({ task, onEdit, onDelete, onStatusChange, }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const statusKey = task.status || "not_started";
@@ -44,9 +44,15 @@ function TaskCard({ task, onEdit, onDelete }) {
       )}
 
       <div className="task-footer">
-        <span className={`task-status-badge task-status-${statusKey}`}>
-          {STATUS_LABELS[statusKey]}
-        </span>
+        <select
+          className={`task-status-select task-status-${statusKey}`}
+          value={statusKey}
+          onChange={(e) => onStatusChange(task, e.target.value)}
+        >
+          <option value="not_started">Not Started</option>
+          <option value="in_progress">In Progress</option>
+          <option value="done">Done</option>
+        </select>
         {task.assignee && (
           <span className="task-assignee">{task.assignee}</span>
         )}

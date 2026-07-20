@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "./firebase";
+import { getMyTeam } from "./api/teams";
 
 /* Components */
 import DeadlineTracker from "./components/deadline_tracker";
@@ -11,13 +12,12 @@ import CommitProgress from "./components/commit_progress";
 import AddTaskModal from "./components/AddTaskModal";
 import TasksDashboard from "./components/tasks_dashboard";
 import ContributionChart from "./components/contribution_chart";
-import Sidebar from "./components/sidebar";
 
 /* Pages */
 import LoginPage from "./pages/LoginPage";
 import CalendarPage from "./pages/CalendarPage";
 import TasksPage from "./pages/TasksPage";
-
+import TeamSetupPage from "./pages/TeamSetupPage";
 
 /* Styling Documents */
 import "./App.css";
@@ -26,12 +26,10 @@ import "./components/sidebar.css";
 import "./components/project_completion.css";
 import "./components/commit_progress.css";
 import "./components/deadline_tracker.css";
-import "./components/sidebar.css";
 import "./components/contribution_chart.css";
 
 /* Layout Helper */
 import Layout from "./layout";
-
 
 function DashboardPage() {
   const [showModal, setShowModal] = useState(false);
@@ -39,45 +37,35 @@ function DashboardPage() {
   const [editingTask, setEditingTask] = useState(null);
 
   return (
-        <div className="dashboard-layout">
-          <div className="card commit-card">
-            <CommitProgress />
-          </div>
+    <div className="dashboard-layout">
+      <div className="card commit-card">
+        <CommitProgress />
+      </div>
 
-          <div className="card contribution-card">
-            <ContributionChart />
-          </div>
+      <div className="card contribution-card">
+        <ContributionChart />
+      </div>
 
-          <div className="card tasks-card">
-            <TasksDashboard
-              refresh={taskRefresh}
-              onAddTask={() => {
-                setEditingTask(null);
-                setShowModal(true);
-          }}
-              onEditTask={(task) => {
-              setEditingTask(task);
-              setShowModal(true);
-          }}
-/>
-          </div>
+      <div className="card tasks-card">
+        <TasksDashboard
+          refresh={taskRefresh}
+          onAddTask={() => { setEditingTask(null); setShowModal(true); }}
+          onEditTask={(task) => { setEditingTask(task); setShowModal(true); }}
+        />
+      </div>
 
-          <div className="card completion-card">
-            <ProjectCompletion refresh={taskRefresh}
-            />
-          </div>
+      <div className="card completion-card">
+        <ProjectCompletion refresh={taskRefresh} />
+      </div>
 
-          <div className="card deadline-card-wrapper">
-            <DeadlineTracker />
-          </div>
+      <div className="card deadline-card-wrapper">
+        <DeadlineTracker refresh={taskRefresh} />
+      </div>
 
       {showModal && (
         <AddTaskModal
           task={editingTask}
-          onClose={() => {
-            setShowModal(false);
-            setEditingTask(null);
-          }}
+          onClose={() => { setShowModal(false); setEditingTask(null); }}
           onTaskCreated={() => setTaskRefresh((r) => r + 1)}
         />
       )}
@@ -86,17 +74,39 @@ function DashboardPage() {
 }
 
 function App() {
-  // undefined = still checking, null = logged out, object = logged in
+  // undefined = checking auth, null = logged out, object = logged in
   const [user, setUser] = useState(undefined);
+  // undefined = checking team, null = no team, object = has team
+  const [team, setTeam] = useState(undefined);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       setUser(firebaseUser ?? null);
+      if (firebaseUser) {
+        try {
+          const { team } = await getMyTeam();
+          setTeam(team);
+        } catch {
+          setTeam(null);
+        }
+      } else {
+        setTeam(undefined);
+      }
     });
     return unsubscribe;
   }, []);
 
-  if (user === undefined) return null;
+  // Still checking auth or team
+  if (user === undefined || (user && team === undefined)) return null;
+
+  if (user && team === null) {
+    return (
+      <TeamSetupPage onTeamJoined={async () => {
+        const { team } = await getMyTeam();
+        setTeam(team);
+      }} />
+    );
+  }
 
   return (
     <Routes>
@@ -107,7 +117,7 @@ function App() {
       <Route
         element={
           user
-            ? <Layout user={user} onLogout={() => signOut(auth)} />
+            ? <Layout user={user} onLogout={() => { signOut(auth); setTeam(undefined); }} />
             : <Navigate to="/login" replace />
         }
       >

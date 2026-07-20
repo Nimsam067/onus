@@ -44,6 +44,8 @@ function TaskCard({ task, onEdit, onDelete, onStatusChange, }) {
       )}
 
       <div className="task-footer">
+
+        <div className="task-footer-top">
         <select
           className={`task-status-select task-status-${statusKey}`}
           value={statusKey}
@@ -56,6 +58,9 @@ function TaskCard({ task, onEdit, onDelete, onStatusChange, }) {
         {task.assignee && (
           <span className="task-assignee">{task.assignee}</span>
         )}
+        </div>
+
+        <div className="task-footer-bottom">
         {task.due_date && (
           <span className="task-due-date">
             Due {new Date(task.due_date).toLocaleDateString("en-GB", {
@@ -63,6 +68,7 @@ function TaskCard({ task, onEdit, onDelete, onStatusChange, }) {
             })}
           </span>
         )}
+        </div>
       </div>
     </div>
   );

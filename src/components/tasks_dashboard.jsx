@@ -50,7 +50,25 @@ function TasksDashboard({
   } catch (err) {
     console.error(err);
   }
-}
+  }
+
+  async function handleStatusChange(task, newStatus) {
+  try {
+    await updateTask(task.id, {
+      title: task.title,
+      description: task.description,
+      dueDate: task.due_date,
+      status: newStatus,
+      assignee: task.assignee,
+      completed: newStatus === "done",
+    });
+
+    const updatedTasks = await getTasks();
+    setTasks(updatedTasks);
+  } catch (err) {
+    console.error(err);
+  }
+  }
 
   function handleEdit(task) {
     onEditTask(task);
@@ -78,7 +96,7 @@ function TasksDashboard({
               task={task}
               onEdit={handleEdit}
               onDelete={handleDelete}
-              onToggleComplete={handleToggleComplete}
+              onStatusChange={handleStatusChange}
             />
           ))
         )}

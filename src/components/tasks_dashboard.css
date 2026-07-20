@@ -135,6 +135,17 @@
   margin-left: auto;
 }
 
+.task-status-select {
+  border: none;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+}
+
 /* =========================
    Task Dashboard Add Task Button
 ========================= */

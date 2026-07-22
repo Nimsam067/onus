@@ -20,7 +20,10 @@ function TasksDashboard({
   setLoading(true);
 
   getTasks()
-    .then(setTasks)
+    .then((data) => {
+      console.log(data);   
+      setTasks(data);
+    })
     .catch((err) => setError(err.message))
     .finally(() => setLoading(false));
   }, [refresh]);
@@ -64,7 +67,6 @@ function TasksDashboard({
     });
 
     const updatedTasks = await getTasks();
-    console.log(tasks);
     setTasks(updatedTasks);
   } catch (err) {
     console.error(err);

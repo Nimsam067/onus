@@ -64,6 +64,7 @@ function TasksDashboard({
     });
 
     const updatedTasks = await getTasks();
+    console.log(tasks);
     setTasks(updatedTasks);
   } catch (err) {
     console.error(err);

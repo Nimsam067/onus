@@ -33,13 +33,16 @@ router.get("/:id", authenticate, async (req, res) => {
 });
 
 router.post("/", authenticate, async (req, res) => {
-  const { title, description, completed, dueDate, status, assignee } = req.body;
+  const { title, description, dueDate, status, assignee } = req.body;
+  const isCompleted = status === "done";
+  const completedAt = isCompleted ? new Date() : null;
+
   const teamId = req.user.team_id;
   if (!teamId) return res.status(400).json({ error: "You must be in a team to create tasks" });
   try {
     const result = await pool.query(
-      "INSERT INTO tasks (title, description, completed, due_date, status, assignee, team_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *",
-      [title, description, completed || false, dueDate || null, status || "not_started", assignee || null, teamId]
+      "INSERT INTO tasks (title, description, completed, due_date, status, assignee, completed_at ) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *",
+      [title, description, isCompleted, dueDate || null, status || "not_started", assignee || null, completedAt]
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {
@@ -49,11 +52,43 @@ router.post("/", authenticate, async (req, res) => {
 });
 
 router.put("/:id", authenticate, async (req, res) => {
-  const { title, description, completed, dueDate, status, assignee } = req.body;
+  const { title, description, dueDate, status, assignee } = req.body;
+  const isCompleted = status === "done";
+
+
   try {
+    const { rows } = await pool.query(
+      "SELECT completed_at FROM tasks WHERE id = $1",
+      [req.params.id]
+    );
+
+    if (rows.length === 0) {
+      return res.status(404).json({ error: "Task not found" });
+    }
+
+    let completedAt = rows[0].completed_at;
+
+    if (isCompleted && !completedAt) {
+      completedAt = new Date();
+    }
+
+    if (!isCompleted) {
+      completedAt = null;
+    }
+
     const result = await pool.query(
-      "UPDATE tasks SET title=$1, description=$2, completed=$3, due_date=$4, status=$5, assignee=$6 WHERE id=$7 AND team_id=$8 RETURNING *",
-      [title, description, completed, dueDate || null, status, assignee || null, req.params.id, req.user.team_id]
+      "UPDATE tasks SET title=$1, description=$2, completed=$3, due_date=$4, status=$5, assignee=$6, completed_at=$7 WHERE id=$8 AND team_id=$9 RETURNING *",
+      [
+      title,
+      description,
+      isCompleted,
+      dueDate || null,
+      status,
+      assignee || null,
+      completedAt,
+      req.params.id,
+      req.user.team_id
+    ]
     );
     if (result.rows.length === 0) return res.status(404).json({ error: "Task not found" });
     res.json(result.rows[0]);

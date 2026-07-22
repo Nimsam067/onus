@@ -1,48 +1,41 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { getTasks } from "../api/tasks";
 
 function CommitProgress() {
-    // Backend integration will be added later
-    const commits = [
-    {
-        id: 1,
-        task: "Circuit Design",
-        person: "Aadi",
-        date: "May 18"
-    },
-    {
-        id: 2,
-        task: "VPN Setup",
-        person: "Jitisha",
-        date: "May 20"
-    },
-    {
-      id: 3,
-        task: "Design Report",
-        person: "Aadi",
-        date: "May 22"
-    },
-    {
-        id: 4,
-        task: "Navigation Algorithm",
-        person: "Jitisha",
-        date: "May 25"
-    }
-    ];
+    const [commits, setCommits] = useState([]);
 
     const timelineRef = useRef(null);
 
     useEffect(() => {
     if (timelineRef.current) {
-      timelineRef.current.scrollLeft =
-        timelineRef.current.scrollWidth;
+    timelineRef.current.scrollLeft =
+      timelineRef.current.scrollWidth;
+      }
+      }, [commits]);
+
+    useEffect(() => {
+    async function loadTasks() {
+    try {
+      const tasks = await getTasks();
+
+      const timeline = [...tasks].sort(
+        (a, b) => new Date(a.created_at) - new Date(b.created_at)
+      );
+
+      setCommits(timeline);
+    } catch (err) {
+      console.error(err);
     }
-    }, []);
+  }
+
+  loadTasks();
+  }, []);
 
     return (
     <div className="commit-progress">
 
       <h2 className="card-title">
-        Commit Progress
+        Activity Timeline
       </h2>
 
       <div
@@ -64,9 +57,14 @@ function CommitProgress() {
             />
 
             <div className="timeline-info">
-              <p>{commit.task}</p>
-              <span>{commit.person}</span>
-              <span>{commit.date}</span>
+              <p>{commit.title}</p>
+              <span>{commit.assignee || "Unassigned"}</span>
+              <span>
+                {new Date(commit.created_at).toLocaleDateString("en-GB", {
+                day: "numeric",
+                month: "short",
+              })}
+</span>
             </div>
           </div>
         ))}

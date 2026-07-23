@@ -146,8 +146,6 @@ function ContributionChart({ tasks }) {
                   : "Assigned"}
               </text>
 
-              <Legend />
-
             </PieChart>
           </ResponsiveContainer>
         </div>

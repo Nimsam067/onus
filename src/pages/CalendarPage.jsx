@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { getTasks } from "../api/tasks";
-import { getDeadlines } from "../api/deadlines";
 import "./CalendarPage.css";
 import { useNavigate } from "react-router-dom";
 
@@ -22,17 +21,22 @@ function CalendarPage() {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    Promise.all([getTasks(), getDeadlines()]).then(([tasks, deadlines]) => {
+    getTasks().then((tasks) => {
       const taskEvents = tasks
         .filter((t) => t.due_date)
-        .map((t) => ({ id: `task-${t.id}`, title: t.title, date: t.due_date.slice(0, 10), type: "task" }));
-      const deadlineEvents = deadlines.map((d) => ({
-        id: `deadline-${d.id}`,
-        title: d.title,
-        date: d.date.slice(0, 10),
-        type: "deadline",
-      }));
-      setEvents([...taskEvents, ...deadlineEvents]);
+        .map((t) => ({
+          id: `task-${t.id}`,
+          title: t.title,
+          date: t.due_date.slice(0, 10),
+
+          type:
+            t.status === "done"
+              ? "completed"
+              : "task",
+
+          status: t.status,
+        }));
+      setEvents(taskEvents);
     });
   }, []);
 
@@ -118,12 +122,17 @@ function CalendarPage() {
         </div>
 
         <div className="cal-legend">
+
           <span className="cal-legend-item">
-            <span className="cal-dot cal-dot-deadline" /> Deadline
+            <span className="cal-dot cal-dot-task" />
+            Pending Task
           </span>
+
           <span className="cal-legend-item">
-            <span className="cal-dot cal-dot-task" /> Task
+            <span className="cal-dot cal-dot-completed" />
+            Completed Task
           </span>
+
         </div>
       </div>
 
@@ -140,7 +149,9 @@ function CalendarPage() {
                 {selectedEvents.map((e) => (
                   <li key={e.id} className="cal-event-item">
                     <span className={`cal-event-badge cal-event-badge-${e.type}`}>
-                      {e.type === "deadline" ? "Deadline" : "Task"}
+                      {e.type === "completed"
+                        ? "Completed"
+                        : "Pending"}
                     </span>
                     <span className="cal-event-title">{e.title}</span>
                   </li>

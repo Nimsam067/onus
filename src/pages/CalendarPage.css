@@ -133,12 +133,12 @@
   flex-shrink: 0;
 }
 
-.cal-dot-deadline {
-  background: #ef4444;
+.cal-dot-task {
+    background: #f59e0b;
 }
 
-.cal-dot-task {
-  background: #635bff;
+.cal-dot-completed {
+    background: #10b981;
 }
 
 /* Legend */

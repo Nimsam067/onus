@@ -8,8 +8,8 @@ import {
 
 function TasksDashboard({
   tasks,
+  setTasks,
   onAddTask,
-  refresh,
   onEditTask,
 }) {
 

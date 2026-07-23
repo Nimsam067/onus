@@ -1,76 +1,68 @@
+import { useEffect, useState } from "react";
+import { getTasks } from "../api/tasks";
+
 import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer
+PieChart,
+Pie,
+Cell,
+Legend,
+Tooltip,
+ResponsiveContainer
 } from "recharts";
 
 function ContributionChart() {
-    // Backend integration will be added later
-    const contributionData = [
-    {
-        name: "Aadi",
-        color: "#635bff",
-        contributions: [3, 5, 4, 8, 6, 7, 9]
-    },
-    {
-        name: "Jitisha",
-        color: "#10b981",
-        contributions: [2, 3, 5, 4, 6, 4, 5]
-    },
-    {
-        name: "Ryan",
-        color: "#f59e0b",
-        contributions: [1, 2, 2, 3, 4, 3, 4]
-    }
-    ];
+  const [tasks, setTasks] = useState([]);
 
-    const data = [
-    {
-    day: "Mon",
-    Aadi: 3,
-    Jitisha: 2,
-    Ryan: 1
-    },
-    {
-    day: "Tue",
-    Aadi: 5,
-    Jitisha: 3,
-    Ryan: 2
-    },
-    {
-    day: "Wed",
-    Aadi: 4,
-    Jitisha: 5,
-    Ryan: 2
-    },
-    {
-    day: "Thu",
-    Aadi: 8,
-    Jitisha: 4,
-    Ryan: 3
-    },
-    {
-    day: "Fri",
-    Aadi: 6,
-    Jitisha: 6,
-    Ryan: 4
-    },
-    {
-    day: "Sat",
-    Aadi: 7,
-    Jitisha: 4,
-    Ryan: 3
-    },
-    {
-    day: "Sun",
-    Aadi: 9,
-    Jitisha: 5,
-    Ryan: 4
+useEffect(() => {
+  async function loadTasks() {
+    try {
+      const data = await getTasks();
+      setTasks(data);
+    } catch (err) {
+      console.error(err);
     }
-    ];
+  }
+
+  loadTasks();
+}, []);
+
+// Computing contributions (weighted averages essentially)
+const contributionMap = {};
+
+tasks
+  .filter(task => task.status === "done")
+  .forEach(task => {
+
+    const person =
+      (task.assignee || "Unassigned")
+        .trim()
+        .toLowerCase();
+
+    contributionMap[person] =
+      (contributionMap[person] || 0)
+      + (task.effort || 3);
+
+});
+
+const pieData = Object.entries(contributionMap).map(
+  ([name, value]) => ({
+    name:
+      name.charAt(0).toUpperCase() +
+      name.slice(1),
+    value,
+  })
+);
+
+// Good pichart colors
+const COLORS = [
+  "#635bff",
+  "#10b981",
+  "#f59e0b",
+  "#ef4444",
+  "#3b82f6",
+  "#8b5cf6",
+  "#14b8a6",
+];
 
     return (
     <div className="content-dashboard">
@@ -79,47 +71,34 @@ function ContributionChart() {
       Contribution Dashboard
     </h2>
 
-    <div className="contribution-legend">
-      <span className="legend-item">🟣 Aadi</span>
-      <span className="legend-item">🟢 Jitisha</span>
-      <span className="legend-item">🟠 Ryan</span>
-    </div>
+   
 
     <div className="chart-container">
-      <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={data}>
+      <ResponsiveContainer width="100%" height="{280}">
+        <PieChart>
 
-          <XAxis dataKey="day" />
+  <Pie
+    data={pieData}
+    dataKey="value"
+    nameKey="name"
+    cx="50%"
+    cy="50%"
+    outerRadius={90}
+    label
+  >
+    {pieData.map((entry, index) => (
+      <Cell
+        key={entry.name}
+        fill={COLORS[index % COLORS.length]}
+      />
+    ))}
+  </Pie>
 
-          <YAxis width={25}/>
+  <Tooltip />
 
-          <Tooltip />
+  <Legend />
 
-          <Line
-            type="monotone"
-            dataKey="Aadi"
-            stroke="#635bff"
-            strokeWidth={3}
-            dot={{ r: 4 }}
-          />
-
-          <Line
-            type="monotone"
-            dataKey="Jitisha"
-            stroke="#10b981"
-            strokeWidth={3}
-            dot={{ r: 4 }}
-          />
-
-          <Line
-            type="monotone"
-            dataKey="Ryan"
-            stroke="#f59e0b"
-            strokeWidth={3}
-            dot={{ r: 4 }}
-          />
-
-        </LineChart>
+</PieChart>
       </ResponsiveContainer>
     </div>
 

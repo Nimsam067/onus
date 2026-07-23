@@ -81,12 +81,6 @@ function CalendarPage() {
 
   return (
     <div className="calendar-page">
-      <button
-      className="back-btn"
-      onClick={() => navigate("/")}
-      >
-        ← Back to Dashboard
-      </button>
       <div className="calendar-card">
         <div className="cal-header">
           <button className="cal-nav-btn" onClick={prevMonth}>&#8249;</button>

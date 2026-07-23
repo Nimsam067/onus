@@ -2,23 +2,8 @@ const express = require("express");
 const pool = require("../db");
 const router = express.Router();
 const authenticate = require("../middleware/auth");
-const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const dir = path.join(__dirname, "../uploads");
-    if (!fs.existsSync(dir)) fs.mkdirSync(dir);
-    cb(null, dir);
-  },
-  filename: (req, file, cb) => {
-    const unique = `${Date.now()}-${Math.round(Math.random() * 1e6)}`;
-    cb(null, `${unique}-${file.originalname}`);
-  },
-});
-
-const upload = multer({ storage, limits: { fileSize: 20 * 1024 * 1024 } });
 
 // GET all resources for team
 router.get("/", authenticate, async (req, res) => {

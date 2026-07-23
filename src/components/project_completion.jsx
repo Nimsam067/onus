@@ -1,40 +1,21 @@
-import { useEffect, useState } from "react";
-import { getTasks } from "../api/tasks";
+import { useMemo } from "react";
 
-function ProjectCompletion({ refresh }) {
-  // Backend integration will be added later
-  const [completionPercentage, setCompletionPercentage] = useState(0);
+function ProjectCompletion({ tasks }) {
+  const completionPercentage = useMemo(() => {
+    const totalTasks = tasks.length;
 
-  useEffect(() => {
-  async function loadCompletion() {
-    try {
-      const tasks = await getTasks();
+    const completedTasks = tasks.filter(
+      (task) => task.completed
+    ).length;
 
-      const totalTasks = tasks.length;
-
-      const completedTasks = tasks.filter(
-        (task) => task.completed
-      ).length;
-
-      const percentage =
-        totalTasks === 0
-          ? 0
-          : Math.round(
-              (completedTasks / totalTasks) * 100
-            );
-
-      setCompletionPercentage(percentage);
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
-  loadCompletion();
-  }, [refresh]);
+    return totalTasks === 0
+      ? 0
+      : Math.round((completedTasks / totalTasks) * 100);
+  }, [tasks]);
 
   return (
     <div className="project-completion-card">
-        <h2 className="card-title">Project Completion</h2>
+      <h2 className="card-title">Project Completion</h2>
       <div className="progress-section">
         <div className="progress-bar-background">
           <div

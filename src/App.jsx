@@ -12,6 +12,7 @@ import CommitProgress from "./components/commit_progress";
 import AddTaskModal from "./components/AddTaskModal";
 import TasksDashboard from "./components/tasks_dashboard";
 import ContributionChart from "./components/contribution_chart";
+import { getTasks } from "./api/tasks";
 
 /* Pages */
 import LoginPage from "./pages/LoginPage";
@@ -33,40 +34,62 @@ import Layout from "./layout";
 
 function DashboardPage() {
   const [showModal, setShowModal] = useState(false);
-  const [taskRefresh, setTaskRefresh] = useState(0);
+  const [tasks, setTasks] = useState([]);
   const [editingTask, setEditingTask] = useState(null);
+
+  useEffect(() => {
+    loadTasks();
+  }, []);
+
+  async function loadTasks() {
+    try {
+      const data = await getTasks();
+      setTasks(data);
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   return (
     <div className="dashboard-layout">
       <div className="card commit-card">
-        <CommitProgress />
+        <CommitProgress
+          tasks={tasks}
+        />
       </div>
 
       <div className="card contribution-card">
-        <ContributionChart />
+        <ContributionChart
+          tasks={tasks}
+        />
       </div>
 
       <div className="card tasks-card">
         <TasksDashboard
-          refresh={taskRefresh}
+          tasks={tasks}
+          setTasks={setTasks}
           onAddTask={() => { setEditingTask(null); setShowModal(true); }}
           onEditTask={(task) => { setEditingTask(task); setShowModal(true); }}
         />
       </div>
 
       <div className="card completion-card">
-        <ProjectCompletion refresh={taskRefresh} />
+        <ProjectCompletion
+          tasks={tasks}
+        />
       </div>
 
       <div className="card deadline-card-wrapper">
-        <DeadlineTracker refresh={taskRefresh} />
+        <DeadlineTracker
+          tasks={tasks}
+        />
       </div>
 
       {showModal && (
         <AddTaskModal
           task={editingTask}
           onClose={() => { setShowModal(false); setEditingTask(null); }}
-          onTaskCreated={() => setTaskRefresh((r) => r + 1)}
+          onTaskCreated={loadTasks}
         />
       )}
     </div>

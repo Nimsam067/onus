@@ -1,17 +1,13 @@
-import { useEffect, useState } from "react";
-import { getTasks } from "../api/tasks";
+import { useMemo } from "react";
 
-function DeadlineTracker({ refresh }) {
-  const [deadlines, setDeadlines] = useState([]);
-
-  useEffect(() => {
-    getTasks().then((tasks) => {
-      const withDates = tasks
-        .filter((t) => t.due_date)
-        .sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
-      setDeadlines(withDates);
-    });
-  }, [refresh]);
+function DeadlineTracker({ tasks }) {
+  const deadlines = useMemo(() => {
+    return tasks
+      .filter(task => task.due_date)
+      .sort(
+        (a, b) => new Date(a.due_date) - new Date(b.due_date)
+      );
+  }, [tasks]);
 
   function formatDate(isoDate) {
     return new Date(isoDate).toLocaleDateString("en-US", {

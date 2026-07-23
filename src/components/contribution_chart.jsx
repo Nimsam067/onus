@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { getTasks } from "../api/tasks";
+import { useState } from "react";
 
 import {
   PieChart,
@@ -10,22 +9,8 @@ import {
   ResponsiveContainer
 } from "recharts";
 
-function ContributionChart() {
-  const [tasks, setTasks] = useState([]);
+function ContributionChart({ tasks }) {
   const [mode, setMode] = useState("completed");
-
-  useEffect(() => {
-    async function loadTasks() {
-      try {
-        const data = await getTasks();
-        setTasks(data);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-    loadTasks();
-  }, []);
 
   const filteredTasks =
     mode === "completed"

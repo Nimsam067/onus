@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import TaskCard from "./tasks_cards";
 import "../App.css";
 import {
@@ -8,24 +7,11 @@ import {
 } from "../api/tasks";
 
 function TasksDashboard({
+  tasks,
   onAddTask,
   refresh,
   onEditTask,
 }) {
-  const [tasks, setTasks] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-  setLoading(true);
-
-  getTasks()
-    .then((data) => { 
-      setTasks(data);
-    })
-    .catch((err) => setError(err.message))
-    .finally(() => setLoading(false));
-  }, [refresh]);
 
   async function handleDelete(id) {
     try {
@@ -75,9 +61,6 @@ function TasksDashboard({
   function handleEdit(task) {
     onEditTask(task);
   }
-
-  if (loading) return <div className="tasks-dashboard"><p>Loading tasks...</p></div>;
-  if (error) return <div className="tasks-dashboard"><p>Error: {error}</p></div>;
 
   return (
     <div className="tasks-dashboard">

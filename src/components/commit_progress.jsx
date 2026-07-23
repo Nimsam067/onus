@@ -1,37 +1,19 @@
-import { useEffect, useRef, useState } from "react";
-import { getTasks } from "../api/tasks";
+import { useEffect, useRef } from "react";
 
-function CommitProgress() {
-    const [commits, setCommits] = useState([]);
-
-    const timelineRef = useRef(null);
-
-    useEffect(() => {
+function CommitProgress({ tasks }) {
+  const timelineRef = useRef(null);
+  const commits = [...tasks].sort(
+    (a, b) => new Date(a.created_at) - new Date(b.created_at)
+  );
+  
+  useEffect(() => {
     if (timelineRef.current) {
-    timelineRef.current.scrollLeft =
-      timelineRef.current.scrollWidth;
-      }
-      }, [commits]);
-
-    useEffect(() => {
-    async function loadTasks() {
-    try {
-      const tasks = await getTasks();
-
-      const timeline = [...tasks].sort(
-        (a, b) => new Date(a.created_at) - new Date(b.created_at)
-      );
-
-      setCommits(timeline);
-    } catch (err) {
-      console.error(err);
+      timelineRef.current.scrollLeft =
+        timelineRef.current.scrollWidth;
     }
-  }
+  }, [commits]);
 
-  loadTasks();
-  }, []);
-
-    return (
+  return (
     <div className="commit-progress">
 
       <h2 className="card-title">
@@ -61,10 +43,10 @@ function CommitProgress() {
               <span>{commit.assignee || "Unassigned"}</span>
               <span>
                 {new Date(commit.created_at).toLocaleDateString("en-GB", {
-                day: "numeric",
-                month: "short",
-              })}
-</span>
+                  day: "numeric",
+                  month: "short",
+                })}
+              </span>
             </div>
           </div>
         ))}

@@ -13,10 +13,6 @@ import {
 function ContributionChart() {
   const [tasks, setTasks] = useState([]);
   const [mode, setMode] = useState("completed");
-  const totalEffort = pieData.reduce(
-    (sum, person) => sum + person.value,
-    0
-  );
 
   useEffect(() => {
     async function loadTasks() {
@@ -55,6 +51,11 @@ function ContributionChart() {
         name.slice(1),
       value,
     })
+  );
+
+  const totalEffort = pieData.reduce(
+    (sum, person) => sum + person.value,
+    0
   );
 
   // Good pichart colors

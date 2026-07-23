@@ -12,7 +12,11 @@
 }
 
 .modal-container {
-    width: 500px;
+      width: 500px;
+    max-width: 90vw;
+
+    max-height: 85vh;
+    overflow-y: auto;
 
     background: white;
 
@@ -149,6 +153,11 @@
     gap: 12px;
 
     margin-top: 10px;
+
+    position: sticky;
+    bottom: 0;
+
+  padding-top: 15px;
 }
 
 .cancel-btn {

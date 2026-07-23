@@ -14,12 +14,11 @@ function ProjectCompletion({ tasks }) {
         0
       );
 
-    const completionPercentage =
-      totalWeight === 0
-        ? 0
-        : Math.round(
-          (completedWeight / totalWeight) * 100
-        );
+    return totalWeight === 0
+      ? 0
+      : Math.round(
+        (completedWeight / totalWeight) * 100
+      );
   }, [tasks]);
 
   return (

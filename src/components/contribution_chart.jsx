@@ -69,29 +69,29 @@ function ContributionChart() {
 
   return (
     <div className="content-dashboard">
-    <div className="contribution-header">
-      <h2 className="card-title">
-        Contribution Dashboard
-      </h2>
+      <div className="contribution-header">
+        <h2 className="card-title">
+          Contribution Dashboard
+        </h2>
 
-      <div className="contribution-toggle">
+        <div className="contribution-toggle">
 
-        <button
-          className={mode === "completed" ? "active" : ""}
-          onClick={() => setMode("completed")}
-        >
-          Completed
-        </button>
+          <button
+            className={mode === "completed" ? "active" : ""}
+            onClick={() => setMode("completed")}
+          >
+            Completed
+          </button>
 
-        <button
-          className={mode === "assigned" ? "active" : ""}
-          onClick={() => setMode("assigned")}
-        >
-          Assigned
-        </button>
+          <button
+            className={mode === "assigned" ? "active" : ""}
+            onClick={() => setMode("assigned")}
+          >
+            Assigned
+          </button>
 
+        </div>
       </div>
-    </div>
 
 
       <div className="contribution-content">
@@ -138,7 +138,9 @@ function ContributionChart() {
         </div>
 
         <div className="contribution-sidebar">
-
+          <h3 className="sidebar-title">
+            Team Contribution
+          </h3>
           {pieData.map((person, index) => {
 
             const total = pieData.reduce(
@@ -147,7 +149,7 @@ function ContributionChart() {
             );
 
             return (
-
+              
               <div
                 className="contribution-person"
                 key={person.name}

@@ -33,7 +33,7 @@ router.get("/:id", authenticate, async (req, res) => {
 });
 
 router.post("/", authenticate, async (req, res) => {
-  const { title, description, dueDate, status, assignee } = req.body;
+  const { title, description, dueDate, status, assignee, effort } = req.body;
   const isCompleted = status === "done";
   const completedAt = isCompleted ? new Date() : null;
 
@@ -41,8 +41,8 @@ router.post("/", authenticate, async (req, res) => {
   if (!teamId) return res.status(400).json({ error: "You must be in a team to create tasks" });
   try {
     const result = await pool.query(
-      "INSERT INTO tasks (title, description, completed, due_date, status, assignee, completed_at, team_id ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *",
-      [title, description, isCompleted, dueDate || null, status || "not_started", assignee || null, completedAt, teamId]
+      "INSERT INTO tasks (title, description, completed, due_date, status, assignee, completed_at, team_id, effort ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *",
+      [title, description, isCompleted, dueDate || null, status || "not_started", assignee || null, completedAt, teamId, effort || 3]
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {
@@ -52,7 +52,7 @@ router.post("/", authenticate, async (req, res) => {
 });
 
 router.put("/:id", authenticate, async (req, res) => {
-  const { title, description, dueDate, status, assignee } = req.body;
+  const { title, description, dueDate, status, assignee, effort } = req.body;
   const isCompleted = status === "done";
 
 
@@ -77,7 +77,7 @@ router.put("/:id", authenticate, async (req, res) => {
     }
 
     const result = await pool.query(
-      "UPDATE tasks SET title=$1, description=$2, completed=$3, due_date=$4, status=$5, assignee=$6, completed_at=$7 WHERE id=$8 AND team_id=$9 RETURNING *",
+      "UPDATE tasks SET title=$1, description=$2, completed=$3, due_date=$4, status=$5, assignee=$6, completed_at=$7, effort=$8 WHERE id=$9 AND team_id=$10 RETURNING *",
       [
       title,
       description,
@@ -86,6 +86,7 @@ router.put("/:id", authenticate, async (req, res) => {
       status,
       assignee || null,
       completedAt,
+      effort || 3,
       req.params.id,
       req.user.team_id
     ]

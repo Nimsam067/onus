@@ -21,7 +21,6 @@ function TasksDashboard({
 
   getTasks()
     .then((data) => {
-      console.log(data);   
       setTasks(data);
     })
     .catch((err) => setError(err.message))

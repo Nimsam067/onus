@@ -1,5 +1,8 @@
 import { auth } from "../firebase";
 
+const CLOUDINARY_CLOUD_NAME = "sfgj0ljy";
+const CLOUDINARY_UPLOAD_PRESET = "onusss";
+
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5001";
 
 async function authHeaders() {
@@ -29,18 +32,25 @@ export async function addLink(title, url) {
 
 export async function uploadFile(title, file) {
   const headers = await authHeaders();
-  const base64 = await new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result.split(",")[1]);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
+
+  // Upload directly to Cloudinary (bypasses CloudFront entirely)
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+  const cloudRes = await fetch(
+    `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/auto/upload`,
+    { method: "POST", body: formData }
+  );
+  if (!cloudRes.ok) throw new Error("Failed to upload to Cloudinary");
+  const { secure_url } = await cloudRes.json();
+
+  // Save the Cloudinary URL to our backend
   const res = await fetch(`${API_URL}/api/resources/upload`, {
     method: "POST",
     headers: { ...headers, "Content-Type": "application/json" },
-    body: JSON.stringify({ title: title || file.name, filename: file.name, data: base64 }),
+    body: JSON.stringify({ title: title || file.name, url: secure_url }),
   });
-  if (!res.ok) throw new Error("Failed to upload file");
+  if (!res.ok) throw new Error("Failed to save file resource");
   return res.json();
 }
 

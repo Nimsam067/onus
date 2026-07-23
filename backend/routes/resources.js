@@ -2,8 +2,6 @@ const express = require("express");
 const pool = require("../db");
 const router = express.Router();
 const authenticate = require("../middleware/auth");
-const path = require("path");
-const fs = require("fs");
 
 // GET all resources for team
 router.get("/", authenticate, async (req, res) => {
@@ -37,31 +35,23 @@ router.post("/link", authenticate, async (req, res) => {
   }
 });
 
-// POST upload a file (received as base64 JSON to avoid CloudFront multipart issues)
+// POST save a file URL (file uploaded directly to Firebase Storage by the client)
 router.post("/upload", authenticate, async (req, res) => {
   const teamId = req.user.team_id;
   if (!teamId) return res.status(400).json({ error: "No team" });
 
-  const { title, filename, data } = req.body;
-  if (!data || !filename) return res.status(400).json({ error: "No file data" });
+  const { title, url } = req.body;
+  if (!url) return res.status(400).json({ error: "No file URL" });
 
   try {
-    const buffer = Buffer.from(data, "base64");
-    const unique = `${Date.now()}-${Math.round(Math.random() * 1e6)}`;
-    const savedFilename = `${unique}-${filename}`;
-    const uploadsDir = path.join(__dirname, "../uploads");
-    if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir);
-    fs.writeFileSync(path.join(uploadsDir, savedFilename), buffer);
-
-    const fileUrl = `https://d2bsupux1e6j0g.cloudfront.net/uploads/${savedFilename}`;
     const result = await pool.query(
       "INSERT INTO resources (team_id, title, url, type) VALUES ($1, $2, $3, 'file') RETURNING *",
-      [teamId, title || filename, fileUrl]
+      [teamId, title, url]
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Failed to save file" });
+    res.status(500).json({ error: "Failed to save file resource" });
   }
 });
 
@@ -73,16 +63,6 @@ router.delete("/:id", authenticate, async (req, res) => {
       [req.params.id, req.user.team_id]
     );
     if (result.rows.length === 0) return res.status(404).json({ error: "Not found" });
-
-    // Delete file from disk if it was an upload
-    if (result.rows[0].type === "file") {
-      const filename = result.rows[0].url.split("/uploads/")[1];
-      if (filename) {
-        const filePath = path.join(__dirname, "../uploads", filename);
-        if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
-      }
-    }
-
     res.json({ message: "Deleted" });
   } catch (err) {
     console.error(err);

@@ -20,6 +20,12 @@ app.use("/api/deadlines", deadlinesRouter);
 app.use("/api/teams", teamsRouter);
 app.use("/api/resources", resourcesRouter);
 
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.header("Access-Control-Allow-Origin", "*");
+  res.status(500).json({ error: err.message || "Internal server error" });
+});
+
 app.listen(PORT, () => {
   console.log(`Backend running on http://localhost:${PORT}`);
 });

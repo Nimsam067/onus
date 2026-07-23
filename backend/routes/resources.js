@@ -53,14 +53,19 @@ router.post("/link", authenticate, async (req, res) => {
 });
 
 // POST upload a file
-router.post("/upload", authenticate, upload.single("file"), async (req, res) => {
+router.post("/upload", authenticate, (req, res, next) => {
+  upload.single("file")(req, res, (err) => {
+    if (err) return res.status(400).json({ error: err.message });
+    next();
+  });
+}, async (req, res) => {
   const teamId = req.user.team_id;
   if (!teamId) return res.status(400).json({ error: "No team" });
   if (!req.file) return res.status(400).json({ error: "No file uploaded" });
 
   const { title } = req.body;
-  const apiUrl = process.env.API_URL || `http://localhost:${process.env.PORT || 5001}`;
-  const fileUrl = `${apiUrl}/uploads/${req.file.filename}`;
+  const cloudfront = "https://d2bsupux1e6j0g.cloudfront.net";
+  const fileUrl = `${cloudfront}/uploads/${req.file.filename}`;
 
   try {
     const result = await pool.query(

@@ -4,6 +4,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "./firebase";
 import { getMyTeam } from "./api/teams";
+import { getTasks } from "./api/tasks";
 
 /* Components */
 import DeadlineTracker from "./components/deadline_tracker";
@@ -12,7 +13,7 @@ import CommitProgress from "./components/commit_progress";
 import AddTaskModal from "./components/AddTaskModal";
 import TasksDashboard from "./components/tasks_dashboard";
 import ContributionChart from "./components/contribution_chart";
-import { getTasks } from "./api/tasks";
+import ResourcesCard from "./components/ResourcesCard";
 
 /* Pages */
 import LoginPage from "./pages/LoginPage";
@@ -20,7 +21,7 @@ import CalendarPage from "./pages/CalendarPage";
 import TasksPage from "./pages/TasksPage";
 import TeamSetupPage from "./pages/TeamSetupPage";
 
-/* Styling Documents */
+/* Styling */
 import "./App.css";
 import "./components/tasks_dashboard.css";
 import "./components/sidebar.css";
@@ -36,10 +37,9 @@ function DashboardPage() {
   const [showModal, setShowModal] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [editingTask, setEditingTask] = useState(null);
+  const [view, setView] = useState("team");
 
-  useEffect(() => {
-    loadTasks();
-  }, []);
+  useEffect(() => { loadTasks(); }, []);
 
   async function loadTasks() {
     try {
@@ -51,55 +51,72 @@ function DashboardPage() {
   }
 
   return (
-    <div className="dashboard-layout">
-      <div className="card commit-card">
-        <CommitProgress
-          tasks={tasks}
-        />
+    <div>
+      <div className="dash-toggle">
+        <button
+          className={`dash-toggle-btn${view === "team" ? " dash-toggle-active" : ""}`}
+          onClick={() => setView("team")}
+        >
+          Team
+        </button>
+        <button
+          className={`dash-toggle-btn${view === "individual" ? " dash-toggle-active" : ""}`}
+          onClick={() => setView("individual")}
+        >
+          Individual
+        </button>
       </div>
 
-      <div className="card contribution-card">
-        <ContributionChart
-          tasks={tasks}
-        />
-      </div>
+      {view === "individual" ? (
+        <div className="individual-coming-soon">
+          <p>Individual dashboard coming soon.</p>
+        </div>
+      ) : (
+        <div className="dashboard-layout">
+          <div className="card commit-card">
+            <CommitProgress tasks={tasks} />
+          </div>
 
-      <div className="card tasks-card">
-        <TasksDashboard
-          tasks={tasks}
-          setTasks={setTasks}
-          onAddTask={() => { setEditingTask(null); setShowModal(true); }}
-          onEditTask={(task) => { setEditingTask(task); setShowModal(true); }}
-        />
-      </div>
+          <div className="card contribution-card">
+            <ContributionChart tasks={tasks} />
+          </div>
 
-      <div className="card completion-card">
-        <ProjectCompletion
-          tasks={tasks}
-        />
-      </div>
+          <div className="card tasks-card">
+            <TasksDashboard
+              tasks={tasks}
+              setTasks={setTasks}
+              onAddTask={() => { setEditingTask(null); setShowModal(true); }}
+              onEditTask={(task) => { setEditingTask(task); setShowModal(true); }}
+            />
+          </div>
 
-      <div className="card deadline-card-wrapper">
-        <DeadlineTracker
-          tasks={tasks}
-        />
-      </div>
+          <div className="card completion-card">
+            <ProjectCompletion tasks={tasks} />
+          </div>
 
-      {showModal && (
-        <AddTaskModal
-          task={editingTask}
-          onClose={() => { setShowModal(false); setEditingTask(null); }}
-          onTaskCreated={loadTasks}
-        />
+          <div className="card deadline-card-wrapper">
+            <DeadlineTracker tasks={tasks} />
+          </div>
+
+          <div className="card resources-card">
+            <ResourcesCard />
+          </div>
+
+          {showModal && (
+            <AddTaskModal
+              task={editingTask}
+              onClose={() => { setShowModal(false); setEditingTask(null); }}
+              onTaskCreated={loadTasks}
+            />
+          )}
+        </div>
       )}
     </div>
   );
 }
 
 function App() {
-  // undefined = checking auth, null = logged out, object = logged in
   const [user, setUser] = useState(undefined);
-  // undefined = checking team, null = no team, object = has team
   const [team, setTeam] = useState(undefined);
 
   useEffect(() => {
@@ -119,7 +136,6 @@ function App() {
     return unsubscribe;
   }, []);
 
-  // Still checking auth or team
   if (user === undefined || (user && team === undefined)) return null;
 
   if (user && team === null) {

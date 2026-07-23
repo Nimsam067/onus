@@ -1,0 +1,176 @@
+.resources-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 14px;
+}
+
+.resources-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.resources-add-row {
+  display: flex;
+  gap: 8px;
+}
+
+.res-add-btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background: white;
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: Poppins, sans-serif;
+  color: #374151;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.res-add-btn:hover {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.res-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  background: #f8fafc;
+  border-radius: 10px;
+  padding: 12px;
+  border: 1px solid #e5e7eb;
+}
+
+.res-input {
+  flex: 1;
+  min-width: 140px;
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-family: Poppins, sans-serif;
+  color: #1f2937;
+  outline: none;
+  background: white;
+  transition: border-color 0.2s;
+}
+
+.res-input:focus {
+  border-color: #635bff;
+}
+
+.res-file-input {
+  flex: 1;
+  font-size: 0.85rem;
+  font-family: Poppins, sans-serif;
+  color: #374151;
+}
+
+.res-form-btns {
+  display: flex;
+  gap: 6px;
+}
+
+.res-submit-btn {
+  padding: 8px 16px;
+  background: #635bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: Poppins, sans-serif;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.res-submit-btn:hover:not(:disabled) {
+  background: #4f46e5;
+}
+
+.res-submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.res-cancel-btn {
+  padding: 8px 14px;
+  background: white;
+  color: #6b7280;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-family: Poppins, sans-serif;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.res-cancel-btn:hover {
+  background: #f3f4f6;
+}
+
+.resources-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.resources-empty {
+  font-size: 0.85rem;
+  color: #9ca3af;
+  margin: 0;
+}
+
+.resource-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 9px;
+  border: 1px solid #e5e7eb;
+  background: #fafafa;
+}
+
+.resource-icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.resource-title {
+  flex: 1;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #1f2937;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.resource-title:hover {
+  color: #635bff;
+  text-decoration: underline;
+}
+
+.resource-delete-btn {
+  background: none;
+  border: none;
+  color: #9ca3af;
+  font-size: 0.75rem;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  transition: color 0.2s, background 0.2s;
+}
+
+.resource-delete-btn:hover {
+  color: #ef4444;
+  background: #fef2f2;
+}

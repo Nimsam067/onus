@@ -2,10 +2,14 @@ import { useEffect, useRef } from "react";
 
 function CommitProgress({ tasks }) {
   const timelineRef = useRef(null);
-  const commits = [...tasks].sort(
-    (a, b) => new Date(a.created_at) - new Date(b.created_at)
-  );
-  
+  const commits = tasks
+    .filter(task => task.completed_at)
+    .sort(
+      (a, b) =>
+        new Date(a.completed_at) -
+        new Date(b.completed_at)
+    );
+
   useEffect(() => {
     if (timelineRef.current) {
       timelineRef.current.scrollLeft =
@@ -40,9 +44,9 @@ function CommitProgress({ tasks }) {
 
             <div className="timeline-info">
               <p>{commit.title}</p>
-              <span>{commit.assignee || "Unassigned"}</span>
+              <span>Completed by {commit.assignee || "Unassigned"}</span>
               <span>
-                {new Date(commit.created_at).toLocaleDateString("en-GB", {
+                {new Date(commit.completed_at).toLocaleDateString("en-GB", {
                   day: "numeric",
                   month: "short",
                 })}

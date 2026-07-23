@@ -3,7 +3,10 @@ import { useMemo } from "react";
 function DeadlineTracker({ tasks }) {
   const deadlines = useMemo(() => {
     return tasks
-      .filter(task => task.due_date)
+      .filter(task =>
+        task.due_date &&
+        task.status !== "done"
+      )
       .sort(
         (a, b) => new Date(a.due_date) - new Date(b.due_date)
       );

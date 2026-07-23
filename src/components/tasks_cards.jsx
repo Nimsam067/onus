@@ -46,28 +46,48 @@ function TaskCard({ task, onEdit, onDelete, onStatusChange, }) {
       <div className="task-footer">
 
         <div className="task-footer-top">
-        <select
-          className={`task-status-select task-status-${statusKey}`}
-          value={statusKey}
-          onChange={(e) => onStatusChange(task, e.target.value)}
-        >
-          <option value="not_started">Not Started</option>
-          <option value="in_progress">In Progress</option>
-          <option value="done">Done</option>
-        </select>
-        {task.assignee && (
-          <span className="task-assignee">{task.assignee}</span>
-        )}
+          <select
+            className={`task-status-select task-status-${statusKey}`}
+            value={statusKey}
+            onChange={(e) => onStatusChange(task, e.target.value)}
+          >
+            <option value="not_started">Not Started</option>
+            <option value="in_progress">In Progress</option>
+            <option value="done">Done</option>
+          </select>
+          {task.assignee && (
+            <span className="task-assignee">{task.assignee}</span>
+          )}
         </div>
 
         <div className="task-footer-bottom">
-        {task.due_date && (
-          <span className="task-due-date">
-            Due {new Date(task.due_date).toLocaleDateString("en-GB", {
-              day: "numeric", month: "short", year: "numeric",
-            })}
-          </span>
-        )}
+          {task.status === "done" && task.completed_at ? (
+            <span className="task-due-date">
+              Completed{" "}
+              {new Date(task.completed_at).toLocaleDateString(
+                "en-GB",
+                {
+                  day: "numeric",
+                  month: "short",
+                  year: "numeric",
+                }
+              )}
+            </span>
+          ) : (
+            task.due_date && (
+              <span className="task-due-date">
+                Due{" "}
+                {new Date(task.due_date).toLocaleDateString(
+                  "en-GB",
+                  {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                  }
+                )}
+              </span>
+            )
+          )}
         </div>
       </div>
     </div>

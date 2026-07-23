@@ -67,11 +67,6 @@
     box-shadow 0.25s ease;
 }
 
-.timeline-circle:hover {
-  transform: scale(1.25);
-
-  box-shadow: 0 0 12px rgba(99, 91, 255, 0.5);
-}
 
 .latest-circle {
   background-color: #10b981;

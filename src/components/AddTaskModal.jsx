@@ -14,6 +14,7 @@ function AddTaskModal({ task, onClose, onTaskCreated }) {
   const [dueDate,     setDueDate]     = useState(task?.due_date?.slice(0, 10) || "");
   const [assignee,    setAssignee]    = useState(task?.assignee || "");
   const [status,      setStatus]      = useState(task?.status || "not_started");
+  const [effort, setEffort] = useState(task?.effort || 3);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -26,9 +27,10 @@ function AddTaskModal({ task, onClose, onTaskCreated }) {
           completed: task.completed,
           status,
           assignee,
+          effort,
         });
       } else {
-        await createTask({ title, description, dueDate, status, assignee });
+        await createTask({ title, description, dueDate, status, assignee, effort });
       }
       onTaskCreated();
       onClose();
@@ -96,6 +98,25 @@ function AddTaskModal({ task, onClose, onTaskCreated }) {
               onChange={(e) => setAssignee(e.target.value)}
             />
           </div>
+
+          <div className="form-group">
+          <label>Task Effort: {effort}</label>
+
+          <input
+            type="range"
+            min="1"
+            max="5"
+            step="1"
+            value={effort}
+            onChange={(e) => setEffort(Number(e.target.value))}
+            className="effort-slider"
+          />
+
+          <div className="effort-labels">
+          <span>Easy</span>
+          <span>Major</span>
+          </div>
+        </div>
 
           <div className="button-row">
             <button type="button" className="cancel-btn" onClick={onClose}>

@@ -16,12 +16,12 @@ export async function getTasks() {
   return res.json();
 }
 
-export async function createTask({ title, description, dueDate, status, assignee }) {
+export async function createTask({ title, description, dueDate, status, assignee, effort }) {
   const headers = await authHeaders();
   const res = await fetch(`${API_URL}/api/tasks`, {
     method: "POST",
     headers: { ...headers, "Content-Type": "application/json" },
-    body: JSON.stringify({ title, description, dueDate, status, assignee }),
+    body: JSON.stringify({ title, description, dueDate, status, assignee, effort }),
   });
   if (!res.ok) throw new Error("Failed to create task");
   return res.json();

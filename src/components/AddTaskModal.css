@@ -228,3 +228,11 @@
   color: #6b7280;
   margin-top: 4px;
 }
+
+.effort-stars {
+  font-size: 1.4rem;
+  color: #fbbf24;
+  text-align: center;
+  margin: 8px 0;
+  letter-spacing: 2px;
+}

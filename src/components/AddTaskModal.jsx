@@ -101,6 +101,11 @@ function AddTaskModal({ task, onClose, onTaskCreated }) {
 
           <div className="form-group">
           <label>Task Effort: {effort}</label>
+          
+          <div className="effort-stars">
+            {"★".repeat(effort)}
+            {"☆".repeat(5 - effort)}
+          </div>
 
           <input
             type="range"

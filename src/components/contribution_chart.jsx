@@ -27,9 +27,6 @@ function ContributionChart() {
     loadTasks();
   }, []);
 
-  // Computing contributions (weighted averages essentially)
-  const contributionMap = {};
-
   const filteredTasks =
     mode === "completed"
       ? tasks.filter(task => task.status === "done")

@@ -38,7 +38,7 @@ export async function uploadFile(title, file) {
   formData.append("file", file);
   formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
   const cloudRes = await fetch(
-    `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/auto/upload`,
+    `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/raw/upload`,
     { method: "POST", body: formData }
   );
   if (!cloudRes.ok) throw new Error("Failed to upload to Cloudinary");

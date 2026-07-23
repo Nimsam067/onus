@@ -102,6 +102,39 @@ function ContributionChart() {
         <div className="chart-container">
           <ResponsiveContainer width="100%" height={280}>
             <PieChart>
+
+              <Pie
+                data={pieData}
+                dataKey="value"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                outerRadius={110}
+                label={false}
+              >
+                {pieData.map((entry, index) => (
+                  <Cell
+                    key={entry.name}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))}
+              </Pie>
+
+
+
+              <Tooltip
+                formatter={(value, name, props) => {
+                  const total = pieData.reduce(
+                    (sum, item) => sum + item.value,
+                    0
+                  );
+
+                  return [
+                    `${((value / total) * 100).toFixed(1)}%`,
+                    props.payload.name,
+                  ];
+                }}
+              />
               <text
                 x="50%"
                 y="47%"
@@ -126,38 +159,7 @@ function ContributionChart() {
                   ? "Completed"
                   : "Assigned"}
               </text>
-
-              <Pie
-                data={pieData}
-                dataKey="value"
-                nameKey="name"
-                cx="50%"
-                cy="50%"
-                outerRadius={95}
-                label={false}
-              >
-                {pieData.map((entry, index) => (
-                  <Cell
-                    key={entry.name}
-                    fill={COLORS[index % COLORS.length]}
-                  />
-                ))}
-              </Pie>
-
-              <Tooltip
-                formatter={(value, name, props) => {
-                  const total = pieData.reduce(
-                    (sum, item) => sum + item.value,
-                    0
-                  );
-
-                  return [
-                    `${((value / total) * 100).toFixed(1)}%`,
-                    props.payload.name,
-                  ];
-                }}
-              />
-
+              
               <Legend />
 
             </PieChart>

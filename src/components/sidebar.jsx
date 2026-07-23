@@ -4,7 +4,6 @@ const NAV_ITEMS = [
   { label: "Home",     path: "/dashboard" },
   { label: "Tasks",    path: "/tasks" },
   { label: "Calendar", path: "/calendar" },
-  { label: "Settings", path: "/settings" },
 ];
 
 function Sidebar({ isOpen, onLogout, onClose }) {

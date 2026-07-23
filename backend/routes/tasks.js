@@ -41,8 +41,8 @@ router.post("/", authenticate, async (req, res) => {
   if (!teamId) return res.status(400).json({ error: "You must be in a team to create tasks" });
   try {
     const result = await pool.query(
-      "INSERT INTO tasks (title, description, completed, due_date, status, assignee, completed_at ) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *",
-      [title, description, isCompleted, dueDate || null, status || "not_started", assignee || null, completedAt]
+      "INSERT INTO tasks (title, description, completed, due_date, status, assignee, completed_at, team_id ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *",
+      [title, description, isCompleted, dueDate || null, status || "not_started", assignee || null, completedAt, teamId]
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {

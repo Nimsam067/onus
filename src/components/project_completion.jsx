@@ -2,15 +2,24 @@ import { useMemo } from "react";
 
 function ProjectCompletion({ tasks }) {
   const completionPercentage = useMemo(() => {
-    const totalTasks = tasks.length;
+    const totalWeight = tasks.reduce(
+      (sum, task) => sum + (task.effort || 3),
+      0
+    );
 
-    const completedTasks = tasks.filter(
-      (task) => task.completed
-    ).length;
+    const completedWeight = tasks
+      .filter(task => task.status === "done")
+      .reduce(
+        (sum, task) => sum + (task.effort || 3),
+        0
+      );
 
-    return totalTasks === 0
-      ? 0
-      : Math.round((completedTasks / totalTasks) * 100);
+    const completionPercentage =
+      totalWeight === 0
+        ? 0
+        : Math.round(
+          (completedWeight / totalWeight) * 100
+        );
   }, [tasks]);
 
   return (

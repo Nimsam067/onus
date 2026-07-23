@@ -69,7 +69,7 @@ function ContributionChart() {
 
   return (
     <div className="content-dashboard">
-
+    <div className="contribution-header">
       <h2 className="card-title">
         Contribution Dashboard
       </h2>
@@ -91,7 +91,7 @@ function ContributionChart() {
         </button>
 
       </div>
-
+    </div>
 
 
       <div className="contribution-content">
@@ -106,7 +106,7 @@ function ContributionChart() {
                 nameKey="name"
                 cx="50%"
                 cy="50%"
-                outerRadius={90}
+                outerRadius={115}
                 label={false}
               >
                 {pieData.map((entry, index) => (

@@ -2,6 +2,14 @@
    Contribution Chart
 ========================= */
 
+.contribution-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
 .content-dashboard {
   height: 100%;
 
@@ -12,9 +20,10 @@
 .contribution-content {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 30px;
   height: 100%;
+  flex: 1;
 }
 
 .chart-container {
@@ -87,7 +96,9 @@
 
   margin-bottom: 14px;
 
-  font-size: .95rem;
+  padding: 8px 0;
+
+  font-size: 1rem;
 }
 
 .person-left {
@@ -96,7 +107,7 @@
 
   align-items: center;
 
-  gap: 10px;
+  gap: 8px;
 }
 
 .color-dot {

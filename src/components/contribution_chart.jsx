@@ -64,6 +64,9 @@ const COLORS = [
   "#14b8a6",
 ];
 
+console.log(tasks);
+console.log(pieData);
+
     return (
     <div className="content-dashboard">
 

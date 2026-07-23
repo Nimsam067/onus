@@ -52,25 +52,26 @@ router.post("/link", authenticate, async (req, res) => {
   }
 });
 
-// POST upload a file
-router.post("/upload", authenticate, (req, res, next) => {
-  upload.single("file")(req, res, (err) => {
-    if (err) return res.status(400).json({ error: err.message });
-    next();
-  });
-}, async (req, res) => {
+// POST upload a file (received as base64 JSON to avoid CloudFront multipart issues)
+router.post("/upload", authenticate, async (req, res) => {
   const teamId = req.user.team_id;
   if (!teamId) return res.status(400).json({ error: "No team" });
-  if (!req.file) return res.status(400).json({ error: "No file uploaded" });
 
-  const { title } = req.body;
-  const cloudfront = "https://d2bsupux1e6j0g.cloudfront.net";
-  const fileUrl = `${cloudfront}/uploads/${req.file.filename}`;
+  const { title, filename, data } = req.body;
+  if (!data || !filename) return res.status(400).json({ error: "No file data" });
 
   try {
+    const buffer = Buffer.from(data, "base64");
+    const unique = `${Date.now()}-${Math.round(Math.random() * 1e6)}`;
+    const savedFilename = `${unique}-${filename}`;
+    const uploadsDir = path.join(__dirname, "../uploads");
+    if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir);
+    fs.writeFileSync(path.join(uploadsDir, savedFilename), buffer);
+
+    const fileUrl = `https://d2bsupux1e6j0g.cloudfront.net/uploads/${savedFilename}`;
     const result = await pool.query(
       "INSERT INTO resources (team_id, title, url, type) VALUES ($1, $2, $3, 'file') RETURNING *",
-      [teamId, title || req.file.originalname, fileUrl]
+      [teamId, title || filename, fileUrl]
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {

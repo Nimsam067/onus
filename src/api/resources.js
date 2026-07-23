@@ -29,13 +29,16 @@ export async function addLink(title, url) {
 
 export async function uploadFile(title, file) {
   const headers = await authHeaders();
-  const formData = new FormData();
-  formData.append("file", file);
-  formData.append("title", title || file.name);
+  const base64 = await new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result.split(",")[1]);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
   const res = await fetch(`${API_URL}/api/resources/upload`, {
     method: "POST",
-    headers,
-    body: formData,
+    headers: { ...headers, "Content-Type": "application/json" },
+    body: JSON.stringify({ title: title || file.name, filename: file.name, data: base64 }),
   });
   if (!res.ok) throw new Error("Failed to upload file");
   return res.json();

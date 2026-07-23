@@ -13,6 +13,10 @@ import {
 function ContributionChart() {
   const [tasks, setTasks] = useState([]);
   const [mode, setMode] = useState("completed");
+  const totalEffort = pieData.reduce(
+    (sum, person) => sum + person.value,
+    0
+  );
 
   useEffect(() => {
     async function loadTasks() {
@@ -64,8 +68,6 @@ function ContributionChart() {
     "#14b8a6",
   ];
 
-  console.log(tasks);
-  console.log(pieData);
 
   return (
     <div className="content-dashboard">
@@ -99,6 +101,30 @@ function ContributionChart() {
         <div className="chart-container">
           <ResponsiveContainer width="100%" height={280}>
             <PieChart>
+              <text
+                x="50%"
+                y="47%"
+                textAnchor="middle"
+                dominantBaseline="middle"
+                fontSize={28}
+                fontWeight="700"
+                fill="#1f2937"
+              >
+                {totalEffort}
+              </text>
+
+              <text
+                x="50%"
+                y="58%"
+                textAnchor="middle"
+                dominantBaseline="middle"
+                fontSize={13}
+                fill="#6b7280"
+              >
+                {mode === "completed"
+                  ? "Completed"
+                  : "Assigned"}
+              </text>
 
               <Pie
                 data={pieData}
@@ -106,7 +132,7 @@ function ContributionChart() {
                 nameKey="name"
                 cx="50%"
                 cy="50%"
-                outerRadius={115}
+                outerRadius={95}
                 label={false}
               >
                 {pieData.map((entry, index) => (
@@ -149,7 +175,7 @@ function ContributionChart() {
             );
 
             return (
-              
+
               <div
                 className="contribution-person"
                 key={person.name}

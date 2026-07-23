@@ -16,6 +16,19 @@ function AddTaskModal({ task, onClose, onTaskCreated }) {
   const [status,      setStatus]      = useState(task?.status || "not_started");
   const [effort, setEffort] = useState(task?.effort || 3);
 
+function formatName(name) {
+  return name
+    .trim()
+    .toLowerCase()
+    .split(" ")
+    .filter(word => word.length > 0)
+    .map(word =>
+      word.charAt(0).toUpperCase() +
+      word.slice(1)
+    )
+    .join(" ");
+}
+
   async function handleSubmit(e) {
     e.preventDefault();
     try {
@@ -26,11 +39,11 @@ function AddTaskModal({ task, onClose, onTaskCreated }) {
           dueDate,
           completed: task.completed,
           status,
-          assignee,
+          assignee: formatName(assignee),
           effort,
         });
       } else {
-        await createTask({ title, description, dueDate, status, assignee, effort });
+        await createTask({ title, description, dueDate, status, assignee: formatName(assignee), effort });
       }
       onTaskCreated();
       onClose();
@@ -101,7 +114,7 @@ function AddTaskModal({ task, onClose, onTaskCreated }) {
 
           <div className="form-group">
           <label>Task Effort: {effort}</label>
-          
+
           <div className="effort-stars">
             {"★".repeat(effort)}
             {"☆".repeat(5 - effort)}

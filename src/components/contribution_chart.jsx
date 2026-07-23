@@ -109,6 +109,7 @@ function ContributionChart() {
                 nameKey="name"
                 cx="50%"
                 cy="50%"
+                innerRadius={70}
                 outerRadius={110}
                 label={false}
               >
@@ -159,7 +160,7 @@ function ContributionChart() {
                   ? "Completed"
                   : "Assigned"}
               </text>
-              
+
               <Legend />
 
             </PieChart>

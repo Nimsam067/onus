@@ -34,17 +34,11 @@ function Sidebar({ isOpen, onLogout, onClose }) {
       </div>
 
       <div className="sidebar-bottom">
-        {user?.photoURL ? (
-          <img
-            src={user.photoURL}
-            alt="Profile"
-            className="profile-circle-image"
-          />
-        ) : (
-          <button className="profile-circle">
-            {initial}
-          </button>
-        )}
+
+        <button className="profile-circle">
+          {initial}
+        </button>
+
         <button className="sidebar-button logout-btn" onClick={onLogout}>
           Log out
         </button>

@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./AddTaskModal.css";
 import { createTask, updateTask } from "../api/tasks";
+import { getTeamMembers } from "../api/teams";
 
 const STATUS_OPTIONS = [
   { value: "not_started", label: "Not Started" },
@@ -15,6 +16,11 @@ function AddTaskModal({ task, onClose, onTaskCreated }) {
   const [assignee,    setAssignee]    = useState(task?.assignee || "");
   const [status,      setStatus]      = useState(task?.status || "not_started");
   const [effort, setEffort] = useState(task?.effort || 3);
+  const [members, setMembers] = useState([]);
+
+  useEffect(() => {
+    getTeamMembers().then(setMembers).catch(() => {});
+  }, []);
 
 function formatName(name) {
   return name
@@ -39,11 +45,11 @@ function formatName(name) {
           dueDate,
           completed: task.completed,
           status,
-          assignee: formatName(assignee),
+          assignee,
           effort,
         });
       } else {
-        await createTask({ title, description, dueDate, status, assignee: formatName(assignee), effort });
+        await createTask({ title, description, dueDate, status, assignee, effort });
       }
       onTaskCreated();
       onClose();
@@ -104,12 +110,14 @@ function formatName(name) {
 
           <div className="form-group">
             <label>In Charge</label>
-            <input
-              type="text"
-              placeholder="Who is responsible?"
-              value={assignee}
-              onChange={(e) => setAssignee(e.target.value)}
-            />
+            <select value={assignee} onChange={(e) => setAssignee(e.target.value)}>
+              <option value="">Unassigned</option>
+              {members.map((m) => (
+                <option key={m.id} value={m.display_name}>
+                  {m.display_name}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="form-group">

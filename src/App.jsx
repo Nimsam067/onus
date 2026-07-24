@@ -33,7 +33,7 @@ import "./components/contribution_chart.css";
 /* Layout Helper */
 import Layout from "./layout";
 
-function DashboardPage() {
+function DashboardPage({ user }) {
   const [showModal, setShowModal] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [editingTask, setEditingTask] = useState(null);
@@ -49,6 +49,8 @@ function DashboardPage() {
       console.error(err);
     }
   }
+
+  const myTasks = tasks.filter(t => t.assignee === user?.displayName);
 
   return (
     <div>
@@ -68,8 +70,31 @@ function DashboardPage() {
       </div>
 
       {view === "individual" ? (
-        <div className="individual-coming-soon">
-          <p>Individual dashboard coming soon.</p>
+        <div className="dashboard-layout individual-layout">
+          <div className="card contribution-card">
+            <ContributionChart tasks={myTasks} />
+          </div>
+
+          <div className="card tasks-card">
+            <TasksDashboard
+              tasks={myTasks}
+              setTasks={setTasks}
+              onAddTask={() => { setEditingTask(null); setShowModal(true); }}
+              onEditTask={(task) => { setEditingTask(task); setShowModal(true); }}
+            />
+          </div>
+
+          <div className="card deadline-card-wrapper">
+            <DeadlineTracker tasks={myTasks} />
+          </div>
+
+          {showModal && (
+            <AddTaskModal
+              task={editingTask}
+              onClose={() => { setShowModal(false); setEditingTask(null); }}
+              onTaskCreated={loadTasks}
+            />
+          )}
         </div>
       ) : (
         <div className="dashboard-layout">
@@ -160,7 +185,7 @@ function App() {
             : <Navigate to="/login" replace />
         }
       >
-        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/dashboard" element={<DashboardPage user={user} />} />
         <Route path="/calendar" element={<CalendarPage />} />
         <Route path="/tasks" element={<TasksPage />} />
       </Route>

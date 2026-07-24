@@ -106,13 +106,10 @@ body {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 }
 
-.individual-coming-soon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 60vh;
-  color: #9ca3af;
-  font-size: 0.95rem;
+.individual-layout {
+  grid-template-areas:
+    "contrib   tasks"
+    "deadlines tasks";
 }
 
 .dashboard-layout {

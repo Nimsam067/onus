@@ -3,7 +3,7 @@
     bottom: 58px;
     left: 10px;
 
-    width: 250px;
+    width: 270px;
 
     background: white;
     border-radius: 18px;
@@ -32,7 +32,7 @@
 .profile-header {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
 }
 
 .profile-header>div {
@@ -41,8 +41,12 @@
 }
 
 .profile-header h3 {
-    margin: 0;
-    font-size: 1.05rem;
+    font-size: 1rem;
+    font-weight: 600;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     color: #1e293b;
 }
 
@@ -90,11 +94,12 @@
     border: 1px solid #e2e8f0;
 
     background: #f8fafc;
+    color: #1e293b;
 
     cursor: pointer;
 
     font-size: .9rem;
-    font-weight: 500;
+    font-weight: 600;
 
     transition: .2s;
 }
@@ -111,21 +116,38 @@
 }
 
 .team-details {
-    margin-top: 14px;
+    margin-top: 10px;
 
     display: flex;
     flex-direction: column;
-    gap: 10px;
+
+    gap: 6px;
+}
+
+.team-details h4 {
+    margin: 10px 0 2px;
+
+    font-size: .72rem;
+
+    text-transform: uppercase;
+
+    letter-spacing: .08em;
+
+    color: #94a3b8;
+
+    font-weight: 600;
 }
 
 .team-member {
-    padding: 8px 12px;
+    padding: 6px 0;
 
-    background: #f8fafc;
+    background: none;
 
-    border-radius: 8px;
+    border-radius: 0;
 
-    font-size: .9rem;
+    font-size: .92rem;
+
+    color: #334155;
 }
 
 .invite-code {
@@ -150,4 +172,18 @@
     color: white;
 
     cursor: pointer;
+}
+
+.profile-heading {
+    margin: 0 0 10px;
+
+    font-size: .75rem;
+
+    text-transform: uppercase;
+
+    letter-spacing: .08em;
+
+    color: #64748b;
+
+    font-weight: 600;
 }

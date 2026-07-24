@@ -37,7 +37,9 @@ function ProfileModal({ user, team, onClose, onLogout }) {
             <hr />
 
             <div className="profile-section">
-
+                <h4 className="profile-heading">
+                    Current Team
+                </h4>
                 <button
                     className="profile-team-btn"
                     onClick={() => setExpanded(!expanded)}

@@ -153,6 +153,8 @@
     font-size: .92rem;
 
     color: #334155;
+
+    flex-shrink: 0;
 }
 
 .invite-code {
@@ -222,6 +224,7 @@
 
 .members-list {
     max-height: 140px;
+    min-height: 0px;
 
     overflow-y: auto;
 
@@ -231,6 +234,12 @@
     gap: 6px;
 
     padding-right: 4px;
+
+    background: #f8fafc;
+
+    border-radius: 8px;
+
+    border: 1px solid #e2e8f0;
 }
 
 .members-list::-webkit-scrollbar {

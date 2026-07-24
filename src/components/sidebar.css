@@ -6,7 +6,7 @@
   position: fixed;
   left: 0;
   top: 56px;
-  width: 220px;
+  width: 200px;
   height: calc(100vh - 56px);
   background-color: #1e293b;
   display: flex;
@@ -14,7 +14,7 @@
   justify-content: space-between;
   padding: 20px 12px;
   box-sizing: border-box;
-  transform: translateX(-220px);
+  transform: translateX(-200px);
   transition: transform 0.3s ease;
   z-index: 100;
 }

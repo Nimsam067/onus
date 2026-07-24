@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "./components/sidebar";
-import { getMyTeam } from "../api/teams";
+import { getMyTeam } from "./api/teams";
 
 function Layout({ user, onLogout }) {
   const [isOpen, setIsOpen] = useState(false);

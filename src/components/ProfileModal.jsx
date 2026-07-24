@@ -76,14 +76,16 @@ function ProfileModal({ user, team, onClose, onLogout }) {
 
                         <h4>Members</h4>
 
-                        {members.map(member => (
-                            <div
-                                key={member.id}
-                                className="team-member"
-                            >
-                                {member.display_name}
-                            </div>
-                        ))}
+                        <div className="members-list">
+                            {members.map(member => (
+                                <div
+                                    key={member.id}
+                                    className="team-member"
+                                >
+                                    {member.display_name}
+                                </div>
+                            ))}
+                        </div>
 
                         <hr />
 

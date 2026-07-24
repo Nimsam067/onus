@@ -28,7 +28,7 @@ function ProfileModal({ user, team, onClose, onLogout }) {
                     {user?.displayName?.charAt(0).toUpperCase()}
                 </div>
 
-                <div>
+                <div className="profile-info">
                     <h3>{user?.displayName}</h3>
                     <p>{user?.email}</p>
                 </div>

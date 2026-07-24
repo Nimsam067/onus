@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { auth } from "../firebase";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { getMyTeam } from "../api/teams";
 import ProfileModal from "./ProfileModal";
 
@@ -20,6 +20,7 @@ function Sidebar({ isOpen, onLogout, onClose }) {
 
   const [showProfile, setShowProfile] = useState(false);
   const [team, setTeam] = useState(null);
+  const profileRef = useRef(null);
 
   useEffect(() => {
     async function loadTeam() {
@@ -32,6 +33,32 @@ function Sidebar({ isOpen, onLogout, onClose }) {
     }
 
     loadTeam();
+  }, []);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setShowProfile(false);
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        profileRef.current &&
+        !profileRef.current.contains(event.target)
+      ) {
+        setShowProfile(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener(
+        "mousedown",
+        handleClickOutside
+      );
+    };
   }, []);
 
   function handleNav(path) {
@@ -55,25 +82,33 @@ function Sidebar({ isOpen, onLogout, onClose }) {
 
       <div className="sidebar-bottom">
 
+        <div ref={profileRef}>
+
+          <button
+            className="profile-circle"
+            onClick={() => setShowProfile(!showProfile)}
+          >
+            {initial}
+          </button>
+
+          {showProfile && (
+            <ProfileModal
+              user={user}
+              team={team}
+              onLogout={onLogout}
+              onClose={() => setShowProfile(false)}
+            />
+          )}
+
+        </div>
+
         <button
-          className="profile-circle"
-          onClick={() => setShowProfile(!showProfile)}
+          className="sidebar-button logout-btn"
+          onClick={onLogout}
         >
-          {initial}
-        </button>
-
-        {showProfile && (
-          <ProfileModal
-            user={user}
-            team={team}
-            onLogout={onLogout}
-            onClose={() => setShowProfile(false)}
-          />
-        )}
-
-        <button className="sidebar-button logout-btn" onClick={onLogout}>
           Log out
         </button>
+
       </div>
     </div>
   );

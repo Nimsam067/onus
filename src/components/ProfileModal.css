@@ -1,41 +1,74 @@
 .profile-modal {
-    position: absolute;
-    bottom: 60px;
-    left: 10px;
+  position: absolute;
+  bottom: 58px;
+  left: 10px;
 
-    width: 260px;
+  width: 250px;
 
-    background: white;
-    border-radius: 16px;
+  background: white;
+  border-radius: 18px;
 
-    padding: 18px;
+  padding: 16px;
 
-    box-shadow: 0 10px 30px rgba(0, 0, 0, .15);
+  box-shadow: 0 12px 32px rgba(0,0,0,.18);
 
-    z-index: 500;
+  z-index: 500;
+
+  animation: profilePop .18s ease;
+}
+
+@keyframes profilePop {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .profile-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.profile-header h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  color: #1e293b;
+}
+
+.profile-header p {
+  margin-top: 2px;
+
+  color: #64748b;
+  font-size: .82rem;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .profile-avatar {
-    width: 44px;
-    height: 44px;
+  width: 52px;
+  height: 52px;
 
-    border-radius: 50%;
+  border-radius: 50%;
 
-    background: #635bff;
-    color: white;
+  background: #635bff;
+  color: white;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    font-weight: 600;
-    font-size: 1.2rem;
+  font-size: 1.35rem;
+  font-weight: 600;
+
+  flex-shrink: 0;
 }
 
 .profile-section {
@@ -43,6 +76,31 @@
 }
 
 .profile-team-btn {
-    width: 100%;
-    margin-top: 8px;
+  width: 100%;
+
+  padding: 11px 14px;
+
+  border-radius: 10px;
+
+  border: 1px solid #e2e8f0;
+
+  background: #f8fafc;
+
+  cursor: pointer;
+
+  font-size: .9rem;
+  font-weight: 500;
+
+  transition: .2s;
+}
+
+.profile-team-btn:hover {
+    background: #eef2ff;
+    border-color: #635bff;
+}
+
+.profile-modal hr {
+  border: none;
+  border-top: 1px solid #e2e8f0;
+  margin: 14px 0;
 }

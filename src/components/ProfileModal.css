@@ -65,7 +65,12 @@
     width: 52px;
     height: 52px;
 
+    min-width: 52px;
+    min-height: 52px;
+
     border-radius: 50%;
+
+    flex: 0 0 52px;
 
     background: #635bff;
     color: white;

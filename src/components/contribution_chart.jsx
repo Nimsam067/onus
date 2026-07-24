@@ -123,10 +123,24 @@ function ContributionChart({ tasks }) {
               />
               <text
                 x="50%"
-                y="47%"
+                y="38%"
                 textAnchor="middle"
                 dominantBaseline="middle"
-                fontSize={28}
+                fontSize={13}
+                fontWeight="600"
+                fill="#6b7280"
+              >
+                {mode === "completed"
+                  ? "Completed"
+                  : "Assigned"}
+              </text>
+
+              <text
+                x="50%"
+                y="50%"
+                textAnchor="middle"
+                dominantBaseline="middle"
+                fontSize={30}
                 fontWeight="700"
                 fill="#1f2937"
               >
@@ -135,15 +149,13 @@ function ContributionChart({ tasks }) {
 
               <text
                 x="50%"
-                y="58%"
+                y="61%"
                 textAnchor="middle"
                 dominantBaseline="middle"
-                fontSize={13}
-                fill="#6b7280"
+                fontSize={12}
+                fill="#94a3b8"
               >
-                {mode === "completed"
-                  ? "Completed"
-                  : "Assigned"}
+                {totalEffort === 1 ? "Effort Point" : "Effort Points"}
               </text>
 
             </PieChart>

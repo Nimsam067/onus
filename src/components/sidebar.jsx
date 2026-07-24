@@ -1,14 +1,18 @@
 import { useNavigate, useLocation } from "react-router-dom";
+import { auth } from "../firebase";
 
 const NAV_ITEMS = [
-  { label: "Home",     path: "/dashboard" },
-  { label: "Tasks",    path: "/tasks" },
+  { label: "Home", path: "/dashboard" },
+  { label: "Tasks", path: "/tasks" },
   { label: "Calendar", path: "/calendar" },
 ];
 
 function Sidebar({ isOpen, onLogout, onClose }) {
   const navigate = useNavigate();
   const location = useLocation();
+  const user = auth.currentUser;
+  const initial =
+    user?.displayName?.charAt(0).toUpperCase() || "?";
 
   function handleNav(path) {
     navigate(path);
@@ -30,7 +34,17 @@ function Sidebar({ isOpen, onLogout, onClose }) {
       </div>
 
       <div className="sidebar-bottom">
-        <button className="profile-circle" />
+        {user?.photoURL ? (
+          <img
+            src={user.photoURL}
+            alt="Profile"
+            className="profile-circle-image"
+          />
+        ) : (
+          <button className="profile-circle">
+            {initial}
+          </button>
+        )}
         <button className="sidebar-button logout-btn" onClick={onLogout}>
           Log out
         </button>

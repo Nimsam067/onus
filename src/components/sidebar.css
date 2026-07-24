@@ -73,6 +73,7 @@
   cursor: pointer;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   margin-bottom: 4px;
+  margin: 0 auto 4px auto;
 }
 
 .profile-circle:hover {

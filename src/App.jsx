@@ -72,7 +72,7 @@ function DashboardPage({ user }) {
       {view === "individual" ? (
         <div className="dashboard-layout individual-layout">
           <div className="card contribution-card">
-            <ContributionChart tasks={myTasks} />
+            <ContributionChart tasks={tasks} highlightName={user?.displayName} />
           </div>
 
           <div className="card tasks-card">

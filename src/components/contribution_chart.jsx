@@ -9,7 +9,7 @@ import {
   ResponsiveContainer
 } from "recharts";
 
-function ContributionChart({ tasks }) {
+function ContributionChart({ tasks, highlightName }) {
   const [mode, setMode] = useState("completed");
 
   const filteredTasks =
@@ -17,33 +17,6 @@ function ContributionChart({ tasks }) {
       ? tasks.filter(task => task.status === "done")
       : tasks;
 
-  const contributionMap = {};
-
-  filteredTasks.forEach(task => {
-    const person = (task.assignee || "Unassigned")
-      .trim()
-      .toLowerCase();
-
-    contributionMap[person] =
-      (contributionMap[person] || 0) +
-      (task.effort || 3);
-  });
-
-  const pieData = Object.entries(contributionMap).map(
-    ([name, value]) => ({
-      name:
-        name.charAt(0).toUpperCase() +
-        name.slice(1),
-      value,
-    })
-  );
-
-  const totalEffort = pieData.reduce(
-    (sum, person) => sum + person.value,
-    0
-  );
-
-  // Good pichart colors
   const COLORS = [
     "#635bff",
     "#10b981",
@@ -53,6 +26,39 @@ function ContributionChart({ tasks }) {
     "#8b5cf6",
     "#14b8a6",
   ];
+
+  let pieData;
+  if (highlightName) {
+    let myEffort = 0, othersEffort = 0;
+    filteredTasks.forEach(task => {
+      const effort = task.effort || 3;
+      if (task.assignee === highlightName) {
+        myEffort += effort;
+      } else {
+        othersEffort += effort;
+      }
+    });
+    pieData = [
+      { name: "You", value: myEffort },
+      ...(othersEffort > 0 ? [{ name: "Others", value: othersEffort }] : []),
+    ];
+  } else {
+    const contributionMap = {};
+    filteredTasks.forEach(task => {
+      const person = (task.assignee || "Unassigned").trim().toLowerCase();
+      contributionMap[person] = (contributionMap[person] || 0) + (task.effort || 3);
+    });
+    pieData = Object.entries(contributionMap).map(([name, value]) => ({
+      name: name.charAt(0).toUpperCase() + name.slice(1),
+      value,
+    }));
+  }
+
+  const totalEffort = pieData.reduce((sum, p) => sum + p.value, 0);
+
+  const sliceColors = highlightName
+    ? ["#635bff", "#e2e8f0"]
+    : COLORS;
 
 
   return (
@@ -101,7 +107,7 @@ function ContributionChart({ tasks }) {
                 {pieData.map((entry, index) => (
                   <Cell
                     key={entry.name}
-                    fill={COLORS[index % COLORS.length]}
+                    fill={sliceColors[index % sliceColors.length]}
                   />
                 ))}
               </Pie>
@@ -164,7 +170,7 @@ function ContributionChart({ tasks }) {
 
         <div className="contribution-sidebar">
           <h3 className="sidebar-title">
-            Team Contribution
+            {highlightName ? "My Contribution" : "Team Contribution"}
           </h3>
           {pieData.map((person, index) => {
 
@@ -186,7 +192,7 @@ function ContributionChart({ tasks }) {
                     className="color-dot"
                     style={{
                       background:
-                        COLORS[index % COLORS.length]
+                        sliceColors[index % sliceColors.length]
                     }}
                   />
 

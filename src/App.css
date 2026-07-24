@@ -61,25 +61,6 @@ body {
   font-family: Poppins, sans-serif;
 }
 
-.hamburger-btn {
-  background: transparent;
-  color: #1e293b;
-  border: none;
-  width: 36px;
-  height: 36px;
-  font-size: 1.2rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  transition: background 0.2s ease;
-}
-
-.hamburger-btn:hover {
-  background: #f1f5f9;
-}
-
 .main-content {
   flex: 1;
   padding: 20px;

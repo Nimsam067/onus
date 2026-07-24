@@ -86,14 +86,7 @@ function ProfileModal({ user, team, onClose, onLogout }) {
 
             </div>
 
-            <hr />
 
-            <button
-                className="sidebar-button logout-btn"
-                onClick={onLogout}
-            >
-                Log Out
-            </button>
         </div>
     );
 }

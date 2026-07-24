@@ -35,6 +35,11 @@
     gap: 14px;
 }
 
+.profile-header>div {
+    flex: 1;
+    min-width: 0;
+}
+
 .profile-header h3 {
     margin: 0;
     font-size: 1.05rem;
@@ -42,10 +47,10 @@
 }
 
 .profile-header p {
-    margin-top: 2px;
+    margin: 2px 0 0;
 
     color: #64748b;
-    font-size: .82rem;
+    font-size: 0.82rem;
 
     white-space: nowrap;
     overflow: hidden;

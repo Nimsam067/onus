@@ -32,7 +32,7 @@
 .profile-header {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
 }
 
 .profile-info {
@@ -41,17 +41,20 @@
 }
 
 .profile-header h3 {
+    margin: 0;
+
     font-size: 1rem;
     font-weight: 600;
+
+    color: #1e293b;
 
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    color: #1e293b;
 }
 
 .profile-header p {
-    margin: 2px 0 0;
+    margin: 6px 0 0;
 
     color: #64748b;
     font-size: 0.82rem;
@@ -62,15 +65,15 @@
 }
 
 .profile-avatar {
-    width: 52px;
-    height: 52px;
+    width: 48px;
+    height: 48px;
 
-    min-width: 52px;
-    min-height: 52px;
+    min-width: 48px;
+    min-height: 48px;
 
     border-radius: 50%;
 
-    flex: 0 0 52px;
+    flex: 0 0 48px;
 
     background: #635bff;
     color: white;
@@ -79,7 +82,7 @@
     align-items: center;
     justify-content: center;
 
-    font-size: 1.35rem;
+    font-size: 1.25rem;
     font-weight: 600;
 
     flex-shrink: 0;
@@ -117,7 +120,7 @@
 .profile-modal hr {
     border: none;
     border-top: 1px solid #e2e8f0;
-    margin: 10px 0;
+    margin: 8px 0;
 }
 
 .team-details {
@@ -130,7 +133,7 @@
 }
 
 .team-details h4 {
-    margin: 10px 0 2px;
+    margin: 4px 0 6px;
 
     font-size: .72rem;
 
@@ -144,7 +147,7 @@
 }
 
 .team-member {
-    padding: 4px 0;
+    padding: 2px 0;
 
     background: none;
 
@@ -223,23 +226,23 @@
 }
 
 .members-list {
+.members-list {
     max-height: 110px;
-    min-height: 0px;
 
     overflow-y: auto;
 
     display: flex;
     flex-direction: column;
 
-    gap: 6px;
+    gap: 4px;
 
-    padding-right: 4px;
+    padding: 8px 12px;
 
     background: #f8fafc;
 
-    border-radius: 8px;
-
     border: 1px solid #e2e8f0;
+    border-radius: 8px;
+}
 }
 
 .profile-heading,

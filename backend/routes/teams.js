@@ -84,4 +84,28 @@ router.post("/join", authenticate, async (req, res) => {
   }
 });
 
+router.post("/leave", authenticate, async (req, res) => {
+  try {
+    await pool.query(
+      `
+      UPDATE users
+      SET team_id = NULL
+      WHERE id = $1
+      `,
+      [req.user.id]
+    );
+
+    res.json({
+      success: true
+    });
+
+  } catch (err) {
+    console.error(err);
+
+    res.status(500).json({
+      error: "Failed to leave team"
+    });
+  }
+});
+
 module.exports = router;

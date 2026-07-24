@@ -16,6 +16,21 @@ export async function getMyTeam() {
   return res.json();
 }
 
+export async function getTeamMembers() {
+  const headers = await authHeaders();
+
+  const res = await fetch(
+    `${API_URL}/api/teams/members`,
+    { headers }
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to load members");
+  }
+
+  return res.json();
+}
+
 export async function createTeam(name) {
   const headers = await authHeaders();
   const res = await fetch(`${API_URL}/api/teams/create`, {

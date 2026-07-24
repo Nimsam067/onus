@@ -19,6 +19,36 @@ router.get("/me", authenticate, async (req, res) => {
   }
 });
 
+// Members of the current user's team
+router.get("/members", authenticate, async (req, res) => {
+  try {
+    if (!req.user.team_id) {
+      return res.json([]);
+    }
+
+    const result = await pool.query(
+      `
+      SELECT
+        id,
+        display_name,
+        email
+      FROM users
+      WHERE team_id = $1
+      ORDER BY display_name
+      `,
+      [req.user.team_id]
+    );
+
+    res.json(result.rows);
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      error: "Failed to fetch members"
+    });
+  }
+});
+
 // Create a new team
 router.post("/create", authenticate, async (req, res) => {
   const { name } = req.body;

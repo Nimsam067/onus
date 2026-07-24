@@ -1,74 +1,74 @@
 .profile-modal {
-  position: absolute;
-  bottom: 58px;
-  left: 10px;
+    position: absolute;
+    bottom: 58px;
+    left: 10px;
 
-  width: 250px;
+    width: 250px;
 
-  background: white;
-  border-radius: 18px;
+    background: white;
+    border-radius: 18px;
 
-  padding: 16px;
+    padding: 16px;
 
-  box-shadow: 0 12px 32px rgba(0,0,0,.18);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, .18);
 
-  z-index: 500;
+    z-index: 500;
 
-  animation: profilePop .18s ease;
+    animation: profilePop .18s ease;
 }
 
 @keyframes profilePop {
-  from {
-    opacity: 0;
-    transform: translateY(10px) scale(.96);
-  }
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(.96);
+    }
 
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 .profile-header {
-  display: flex;
-  align-items: center;
-  gap: 14px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
 }
 
 .profile-header h3 {
-  margin: 0;
-  font-size: 1.05rem;
-  color: #1e293b;
+    margin: 0;
+    font-size: 1.05rem;
+    color: #1e293b;
 }
 
 .profile-header p {
-  margin-top: 2px;
+    margin-top: 2px;
 
-  color: #64748b;
-  font-size: .82rem;
+    color: #64748b;
+    font-size: .82rem;
 
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .profile-avatar {
-  width: 52px;
-  height: 52px;
+    width: 52px;
+    height: 52px;
 
-  border-radius: 50%;
+    border-radius: 50%;
 
-  background: #635bff;
-  color: white;
+    background: #635bff;
+    color: white;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  font-size: 1.35rem;
-  font-weight: 600;
+    font-size: 1.35rem;
+    font-weight: 600;
 
-  flex-shrink: 0;
+    flex-shrink: 0;
 }
 
 .profile-section {
@@ -76,22 +76,22 @@
 }
 
 .profile-team-btn {
-  width: 100%;
+    width: 100%;
 
-  padding: 11px 14px;
+    padding: 11px 14px;
 
-  border-radius: 10px;
+    border-radius: 10px;
 
-  border: 1px solid #e2e8f0;
+    border: 1px solid #e2e8f0;
 
-  background: #f8fafc;
+    background: #f8fafc;
 
-  cursor: pointer;
+    cursor: pointer;
 
-  font-size: .9rem;
-  font-weight: 500;
+    font-size: .9rem;
+    font-weight: 500;
 
-  transition: .2s;
+    transition: .2s;
 }
 
 .profile-team-btn:hover {
@@ -100,7 +100,49 @@
 }
 
 .profile-modal hr {
-  border: none;
-  border-top: 1px solid #e2e8f0;
-  margin: 14px 0;
+    border: none;
+    border-top: 1px solid #e2e8f0;
+    margin: 14px 0;
+}
+
+.team-details {
+    margin-top: 14px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.team-member {
+    padding: 8px 12px;
+
+    background: #f8fafc;
+
+    border-radius: 8px;
+
+    font-size: .9rem;
+}
+
+.invite-code {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+.invite-code button {
+    padding: 6px 12px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #635bff;
+
+    color: white;
+
+    cursor: pointer;
 }

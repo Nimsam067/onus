@@ -1,10 +1,30 @@
 import { useEffect, useState } from "react";
-import { getTeamMembers } from "../api/teams";
+import {
+    getTeamMembers,
+    leaveTeam,
+} from "../api/teams";
 import "./ProfileModal.css";
 
 function ProfileModal({ user, team, onClose, onLogout }) {
     const [expanded, setExpanded] = useState(false);
     const [members, setMembers] = useState([]);
+
+    async function handleLeaveTeam() {
+        const confirmed = window.confirm(
+            "Are you sure you want to leave this team?"
+        );
+
+        if (!confirmed) return;
+
+        try {
+            await leaveTeam();
+
+            window.location.reload();
+        } catch (err) {
+            console.error(err);
+            alert("Failed to leave team.");
+        }
+    }
 
     useEffect(() => {
         async function loadMembers() {
@@ -82,7 +102,18 @@ function ProfileModal({ user, team, onClose, onLogout }) {
                             </button>
 
                         </div>
+                        {team && (
+                            <>
+                                <hr />
 
+                                <button
+                                    className="leave-team-btn"
+                                    onClick={handleLeaveTeam}
+                                >
+                                    Leave Team
+                                </button>
+                            </>
+                        )}
                     </div>
                 )}
 

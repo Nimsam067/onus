@@ -53,3 +53,20 @@ export async function joinTeam(code) {
   if (!res.ok) throw new Error(data.error || "Failed to join team");
   return data;
 }
+
+export async function leaveTeam() {
+  const headers = await authHeaders();
+
+  const res = await fetch(`${API_URL}/api/teams/leave`, {
+    method: "POST",
+    headers,
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.error || "Failed to leave team");
+  }
+
+  return data;
+}

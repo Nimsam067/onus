@@ -136,9 +136,9 @@ function ContributionChart({ tasks, highlightName }) {
                 fontWeight="600"
                 fill="#6b7280"
               >
-                {mode === "completed"
-                  ? "Completed"
-                  : "Assigned"}
+                {highlightName
+                  ? (mode === "completed" ? "Completed" : "Assigned")
+                  : (mode === "completed" ? "Completed" : "Assigned")}
               </text>
 
               <text
@@ -150,7 +150,7 @@ function ContributionChart({ tasks, highlightName }) {
                 fontWeight="700"
                 fill="#1f2937"
               >
-                {totalEffort}
+                {highlightName ? (pieData[0]?.value ?? 0) : totalEffort}
               </text>
 
               <text
@@ -161,7 +161,7 @@ function ContributionChart({ tasks, highlightName }) {
                 fontSize={12}
                 fill="#94a3b8"
               >
-                {totalEffort === 1 ? "Effort Point" : "Effort Points"}
+                {highlightName ? "Your Points" : (totalEffort === 1 ? "Effort Point" : "Effort Points")}
               </text>
 
             </PieChart>

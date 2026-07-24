@@ -1,5 +1,9 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { auth } from "../firebase";
+import { useState, useEffect } from "react";
+import { getMyTeam } from "../api/teams";
+import ProfileModal from "./ProfileModal";
+
 
 const NAV_ITEMS = [
   { label: "Home", path: "/dashboard" },
@@ -13,6 +17,22 @@ function Sidebar({ isOpen, onLogout, onClose }) {
   const user = auth.currentUser;
   const initial =
     user?.displayName?.charAt(0).toUpperCase() || "?";
+
+  const [showProfile, setShowProfile] = useState(false);
+  const [team, setTeam] = useState(null);
+
+  useEffect(() => {
+    async function loadTeam() {
+      try {
+        const { team } = await getMyTeam();
+        setTeam(team);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    loadTeam();
+  }, []);
 
   function handleNav(path) {
     navigate(path);
@@ -35,9 +55,21 @@ function Sidebar({ isOpen, onLogout, onClose }) {
 
       <div className="sidebar-bottom">
 
-        <button className="profile-circle">
+        <button
+          className="profile-circle"
+          onClick={() => setShowProfile(!showProfile)}
+        >
           {initial}
         </button>
+
+        {showProfile && (
+          <ProfileModal
+            user={user}
+            team={team}
+            onLogout={onLogout}
+            onClose={() => setShowProfile(false)}
+          />
+        )}
 
         <button className="sidebar-button logout-btn" onClick={onLogout}>
           Log out

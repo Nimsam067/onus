@@ -215,6 +215,19 @@ body {
   box-shadow: 0 40px 120px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255,255,255,0.08);
 }
 
+/* Remove tight max-heights inside the expanded overlay so content fills the space */
+.card-expanded .resources-col-list {
+  max-height: 62vh;
+}
+
+.card-expanded .tasks-grid {
+  max-height: 70vh;
+}
+
+.card-expanded .resources-cols {
+  min-height: 50vh;
+}
+
 .card-close-btn {
   position: absolute;
   top: 16px;

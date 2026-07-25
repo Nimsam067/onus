@@ -17,17 +17,14 @@ async function authenticate(req, res, next) {
   try {
     const decoded = await admin.auth().verifyIdToken(token);
 
-    let result = await pool.query(
-      "SELECT * FROM users WHERE firebase_uid = $1",
-      [decoded.uid]
+    const result = await pool.query(
+      `INSERT INTO users (firebase_uid, email, display_name)
+       VALUES ($1, $2, $3)
+       ON CONFLICT (firebase_uid)
+       DO UPDATE SET email = EXCLUDED.email, display_name = EXCLUDED.display_name
+       RETURNING *`,
+      [decoded.uid, decoded.email, decoded.name || ""]
     );
-
-    if (result.rows.length === 0) {
-      result = await pool.query(
-        "INSERT INTO users (firebase_uid, email, display_name) VALUES ($1, $2, $3) RETURNING *",
-        [decoded.uid, decoded.email, decoded.name || ""]
-      );
-    }
 
     req.user = result.rows[0];
     next();

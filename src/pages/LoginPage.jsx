@@ -4,6 +4,8 @@ import {
   signInWithPopup,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  sendEmailVerification,
+  signOut,
   updateProfile,
 } from "firebase/auth";
 import { auth, googleProvider } from "../firebase";
@@ -26,29 +28,68 @@ function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [verificationSent, setVerificationSent] = useState(false);
+  const [notVerified, setNotVerified] = useState(false);
   const navigate = useNavigate();
 
   function switchMode(m) {
     setMode(m);
     setError("");
+    setVerificationSent(false);
+    setNotVerified(false);
   }
 
   async function handleEmailAuth(e) {
     e.preventDefault();
     setError("");
+    setNotVerified(false);
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    if (!emailRegex.test(email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+
     setLoading(true);
     try {
       if (mode === "signup") {
         const { user } = await createUserWithEmailAndPassword(auth, email, password);
-        if (name.trim()) await updateProfile(user, { displayName: name.trim() });
+        if (name.trim()) {
+          await updateProfile(user, { displayName: name.trim() });
+          await user.getIdToken(true);
+        }
+        await sendEmailVerification(user);
+        await signOut(auth);
+        setVerificationSent(true);
+        setLoading(false);
       } else {
-        await signInWithEmailAndPassword(auth, email, password);
+        const { user } = await signInWithEmailAndPassword(auth, email, password);
+        if (!user.emailVerified) {
+          await signOut(auth);
+          setNotVerified(true);
+          setLoading(false);
+          return;
+        }
+        navigate("/dashboard");
       }
-      navigate("/dashboard");
     } catch (err) {
       setError(ERROR_MESSAGES[err.code] || "Something went wrong. Please try again.");
       setLoading(false);
     }
+  }
+
+  async function handleResendVerification() {
+    setError("");
+    setLoading(true);
+    try {
+      const { user } = await signInWithEmailAndPassword(auth, email, password);
+      await sendEmailVerification(user);
+      await signOut(auth);
+      setError("Verification email resent — check your inbox.");
+    } catch {
+      setError("Failed to resend. Check your email and password.");
+    }
+    setLoading(false);
   }
 
   async function handleGoogleSignIn() {
@@ -63,6 +104,28 @@ function LoginPage() {
       }
       setLoading(false);
     }
+  }
+
+  if (verificationSent) {
+    return (
+      <div className="login-page">
+        <img src={logo} alt="" className="login-bg-logo" />
+        <div className="login-card">
+          <div className="login-logo">
+            <div className="login-logo-icon">O</div>
+            <span className="login-logo-text">onus</span>
+          </div>
+          <div className="verify-icon">✉️</div>
+          <h1 className="login-title" style={{ fontSize: "1.3rem" }}>Check your inbox</h1>
+          <p className="login-subtitle">
+            We sent a verification link to <strong>{email}</strong>. Click it to activate your account, then sign in.
+          </p>
+          <button className="email-btn" onClick={() => { setVerificationSent(false); setMode("signin"); }}>
+            Go to Sign In
+          </button>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -80,18 +143,23 @@ function LoginPage() {
           <button
             className={`login-mode-btn${mode === "signin" ? " active" : ""}`}
             onClick={() => switchMode("signin")}
-          >
-            Sign In
-          </button>
+          >Sign In</button>
           <button
             className={`login-mode-btn${mode === "signup" ? " active" : ""}`}
             onClick={() => switchMode("signup")}
-          >
-            Sign Up
-          </button>
+          >Sign Up</button>
         </div>
 
         {error && <p className="login-error">{error}</p>}
+
+        {notVerified && (
+          <div className="verify-nudge">
+            <p>Your email isn't verified yet. Check your inbox for the verification link.</p>
+            <button className="resend-btn" onClick={handleResendVerification} disabled={loading}>
+              Resend verification email
+            </button>
+          </div>
+        )}
 
         <form className="login-form" onSubmit={handleEmailAuth}>
           {mode === "signup" && (

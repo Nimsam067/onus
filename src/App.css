@@ -280,11 +280,13 @@ body {
 .deadline-card-wrapper {
   grid-area: deadlines;
   min-height: 120px;
+  align-self: start;
 }
 
 .resources-card {
   grid-area: resources;
   min-height: 160px;
+  align-self: start;
 }
 
 

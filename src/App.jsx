@@ -146,8 +146,15 @@ function App() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      setUser(firebaseUser ?? null);
       if (firebaseUser) {
+        const isEmailPassword = firebaseUser.providerData[0]?.providerId === "password";
+        if (isEmailPassword && !firebaseUser.emailVerified) {
+          await signOut(auth);
+          setUser(null);
+          setTeam(undefined);
+          return;
+        }
+        setUser(firebaseUser);
         try {
           const { team } = await getMyTeam();
           setTeam(team);
@@ -155,6 +162,7 @@ function App() {
           setTeam(null);
         }
       } else {
+        setUser(null);
         setTeam(undefined);
       }
     });

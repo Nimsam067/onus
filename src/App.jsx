@@ -176,7 +176,7 @@ function DashboardPage({ user }) {
             )}
             {expandedCard === "deadline" && <DeadlineTracker tasks={displayTasks} />}
             {expandedCard === "resources" && <ResourcesCard />}
-            {expandedCard === "commit" && <CommitProgress tasks={tasks} />}
+            {expandedCard === "commit" && <CommitProgress tasks={displayTasks} />}
             {expandedCard === "completion" && <ProjectCompletion tasks={tasks} />}
           </div>
         </div>

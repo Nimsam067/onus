@@ -149,7 +149,6 @@ function App() {
       if (firebaseUser) {
         const isEmailPassword = firebaseUser.providerData[0]?.providerId === "password";
         if (isEmailPassword && !firebaseUser.emailVerified) {
-          await signOut(auth);
           setUser(null);
           setTeam(undefined);
           return;

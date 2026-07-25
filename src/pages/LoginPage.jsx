@@ -161,7 +161,7 @@ function LoginPage() {
           </div>
         )}
 
-        <form className="login-form" onSubmit={handleEmailAuth}>
+        <form className="login-form" onSubmit={handleEmailAuth} noValidate>
           {mode === "signup" && (
             <input
               className="login-input"

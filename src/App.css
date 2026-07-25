@@ -207,6 +207,7 @@ body {
   border-radius: 22px;
   width: 85vw;
   max-width: 1080px;
+  min-height: 65vh;
   max-height: 88vh;
   overflow-y: auto;
   padding: 28px;
@@ -215,17 +216,59 @@ body {
   box-shadow: 0 40px 120px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255,255,255,0.08);
 }
 
-/* Remove tight max-heights inside the expanded overlay so content fills the space */
-.card-expanded .resources-col-list {
-  max-height: 62vh;
+/* ── Expanded overrides — let each card fill the overlay ── */
+
+/* Contribution chart */
+.card-expanded .content-dashboard {
+  min-height: 60vh;
+}
+.card-expanded .chart-container {
+  height: 460px;
 }
 
+/* Tasks */
 .card-expanded .tasks-grid {
   max-height: 70vh;
 }
 
+/* Resources */
+.card-expanded .resources-col-list {
+  max-height: 54vh;
+}
 .card-expanded .resources-cols {
+  min-height: 52vh;
+}
+
+/* Deadline tracker */
+.card-expanded .deadline-card {
+  min-height: 60vh;
+}
+.card-expanded .deadline-list {
   min-height: 50vh;
+}
+
+/* Activity timeline */
+.card-expanded .commit-progress {
+  min-height: 55vh;
+  justify-content: center;
+}
+.card-expanded .timeline-container {
+  padding: 40px 10px;
+}
+
+/* Project completion */
+.card-expanded .project-completion-card {
+  min-height: 55vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 32px;
+}
+.card-expanded .progress-bar-background {
+  height: 20px;
+}
+.card-expanded .progress-percentage {
+  font-size: 3rem;
 }
 
 .card-close-btn {

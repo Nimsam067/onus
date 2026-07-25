@@ -109,6 +109,7 @@ body {
 .individual-layout {
   grid-template-areas:
     "contrib   tasks"
+    "activity  tasks"
     "deadlines tasks";
 }
 

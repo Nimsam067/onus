@@ -101,6 +101,10 @@ function DashboardPage({ user }) {
               onEditTask={(task) => { setEditingTask(task); setShowModal(true); }}
             />
           </div>
+          <div className="card commit-card">
+            {expandBtn("commit")}
+            <CommitProgress tasks={myTasks} />
+          </div>
           <div className="card deadline-card-wrapper">
             {expandBtn("deadline")}
             <DeadlineTracker tasks={myTasks} />

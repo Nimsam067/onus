@@ -13,37 +13,39 @@ test("User can create a new task", async ({ page }) => {
     })
     .click();
 
-  await page
+  const modal = page.locator(".modal-container");
+
+  await modal
     .getByRole("textbox", {
       name: "Enter task title...",
     })
     .fill(taskName);
 
-  await page
+  await modal
     .getByRole("textbox", {
       name: "Describe this task...",
     })
     .fill("Created by Playwright");
 
-  await page
+  await modal
     .locator('input[type="date"]')
     .fill("2026-08-01");
 
-  await page
+  await modal
     .getByRole("combobox")
     .first()
     .selectOption("in_progress");
 
-  await page
+  await modal
     .getByRole("combobox")
     .nth(1)
     .selectOption("Onus Tester");
 
-  await page
+  await modal
     .getByRole("slider")
     .fill("4");
 
-  await page
+  await modal
     .getByRole("button", {
       name: "Create Task",
     })

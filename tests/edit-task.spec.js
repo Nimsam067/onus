@@ -70,23 +70,25 @@ test("User can edit a task", async ({ page }) => {
     .getByRole("button", { name: "Edit" })
     .click();
 
-  // Change status to Done
-  await page
+  // Change status to Done — scope to modal to avoid matching task card selects
+  const modal = page.locator(".modal-container");
+
+  await modal
     .getByRole("combobox")
-    .nth(2)
+    .first()
     .selectOption("done");
 
-  await page
+  await modal
     .getByRole("button", { name: "Save Changes" })
     .click();
 
   // Verify status changed
   await expect(
-    page.getByDisplayValue("Done")
+    page.locator(".task-status-done").first()
   ).toBeVisible();
 
   // Verify completed date appears
   await expect(
-    page.getByText(/Completed/i)
+    page.locator(".task-due-date", { hasText: /Completed/i }).first()
   ).toBeVisible();
 });

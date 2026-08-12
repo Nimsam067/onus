@@ -139,3 +139,18 @@
 
   color: #374151;
 }
+
+@media (max-width: 700px) {
+  .contribution-sidebar {
+    display: none;
+  }
+
+  .contribution-content {
+    display: block;
+  }
+
+  .chart-container {
+    width: 100%;
+    height: 260px;
+  }
+}

@@ -100,8 +100,8 @@ function ContributionChart({ tasks, highlightName }) {
                 nameKey="name"
                 cx="50%"
                 cy="50%"
-                innerRadius={70}
-                outerRadius={110}
+                innerRadius="55%"
+                outerRadius="80%"
                 label={false}
               >
                 {pieData.map((entry, index) => (
